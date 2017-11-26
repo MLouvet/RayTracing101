@@ -5,7 +5,7 @@ This is a C++ framework for a raytracer. It is created for the Computer
 Science course "Introduction to Computer Graphics" taught at the 
 University of Groningen by Tobias Isenberg.
 
-Author: Maarten Everts
+Author: Maarten Everts, Mathieu Louvet, Bryan Vigée
 
 This framework is inspired by and uses code of the raytracer framework of 
 Bert Freudenberg that can be found at
