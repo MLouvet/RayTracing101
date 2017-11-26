@@ -65,13 +65,15 @@ Color Scene::trace(const Ray &ray)
 		Light* l = lights[i];
 		Vector vL = (l->position - hit).normalized();
 
-		//Calculation of ambient light - TODO
+		//Calculation of ambient light: ka * La
+		cAmbiant = material->ka * material->color * l->color;
 
-		//Calculation of diffuse reflection
-		cDiffuse = material->kd * material->color * max(vL.dot(N), 0.0);
+		//Calculation of diffuse reflection: kd * Ld * L.N
+		cDiffuse = material->kd * material->color * l->color * max(vL.dot(N), 0.0);
 
-		//Calculation of specular light - TODO
-
+		//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
+		Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
+		cSpecular = material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
 	}
 
 	return cAmbiant + cDiffuse + cSpecular;
