@@ -24,6 +24,7 @@ Color Scene::trace(const Ray &ray)
 {
 	// Find hit object and distance
 	Hit min_hit(std::numeric_limits<double>::infinity(), Vector());
+	Hit max_hit(std::numeric_limits<double>::infinity(), Vector());
 	Object *obj = NULL;
 	for (unsigned int i = 0; i < objects.size(); ++i) {
 		Hit hit(objects[i]->intersect(ray));
@@ -41,44 +42,56 @@ Color Scene::trace(const Ray &ray)
 	Vector N = min_hit.N;                          //the normal at hit point
 	Vector V = -ray.D;                             //the view vector
 
+	switch (renderMode)
+	{
+		case Scene::Phong:
 
-	/****************************************************
-	* This is where you should insert the color
-	* calculation (Phong model).
-	*
-	* Given: material, hit, N, V, lights[]
-	* Sought: color
-	*
-	* Hints: (see triple.h)
-	*        Triple.dot(Vector) dot product
-	*        Vector+Vector      vector sum
-	*        Vector-Vector      vector difference
-	*        Point-Point        yields vector
-	*        Vector.normalize() normalizes vector, returns length
-	*        double*Color        scales each color component (r,g,b)
-	*        Color*Color        dito
-	*        pow(a,b)           a to the power of b
-	****************************************************/
+			/****************************************************
+			* This is where you should insert the color
+			* calculation (Phong model).
+			*
+			* Given: material, hit, N, V, lights[]
+			* Sought: color
+			*
+			* Hints: (see triple.h)
+			*        Triple.dot(Vector) dot product
+			*        Vector+Vector      vector sum
+			*        Vector-Vector      vector difference
+			*        Point-Point        yields vector
+			*        Vector.normalize() normalizes vector, returns length
+			*        double*Color        scales each color component (r,g,b)
+			*        Color*Color        dito
+			*        pow(a,b)           a to the power of b
+			****************************************************/
+			Color cAmbiant, cDiffuse, cSpecular;                  
+			// place holder
+			cAmbiant = cDiffuse = cSpecular = Color(0, 0, 0);
+			for (unsigned int i = 0; i < lights.size(); i++) {
+				Light* l = lights[i];
+				Vector vL = (l->position - hit).normalized();
 
-	Color cAmbiant, cDiffuse, cSpecular;                  // place holder
-	cAmbiant = cDiffuse = cSpecular = Color(0, 0, 0);
+				//Calculation of ambient light: ka * La
+				cAmbiant = material->ka * material->color * l->color;
 
-	for (unsigned int i = 0; i < lights.size(); i++) {
-		Light* l = lights[i];
-		Vector vL = (l->position - hit).normalized();
+				//Calculation of diffuse reflection: kd * Ld * L.N
+				cDiffuse = material->kd * material->color * l->color * max(vL.dot(N), 0.0);
 
-		//Calculation of ambient light: ka * La
-		cAmbiant = material->ka * material->color * l->color;
-
-		//Calculation of diffuse reflection: kd * Ld * L.N
-		cDiffuse = material->kd * material->color * l->color * max(vL.dot(N), 0.0);
-
-		//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
-		Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
-		cSpecular = material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
+				//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
+				Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
+				cSpecular = material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
+			}
+			return cAmbiant + cDiffuse + cSpecular;
+			break;
+		case Scene::ZBuffer:
+			break;
+		case Scene::Normal:
+			break;
+		default:
+			return Color(0, 0, 0);
+			break;
 	}
 
-	return cAmbiant + cDiffuse + cSpecular;
+
 }
 
 void Scene::render(Image &img)
