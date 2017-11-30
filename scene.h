@@ -22,14 +22,17 @@
 #include "light.h"
 #include "object.h"
 #include "image.h"
-
+const double minZ = 500;
+const double maxZ = 850;
 class Scene
 {
 private:
 	std::vector<Object*> objects;
 	std::vector<Light*> lights;
 	Triple eye;
+
 public:
+	Scene(int renderMode_) : renderMode(RenderMode(renderMode_)) {};
 	Color trace(const Ray &ray);
 	void render(Image &img);
 	void addObject(Object *o);

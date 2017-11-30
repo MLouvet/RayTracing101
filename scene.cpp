@@ -20,6 +20,7 @@
 #include "scene.h"
 #include "material.h"
 
+
 Color Scene::trace(const Ray &ray)
 {
 	// Find hit object and distance
@@ -42,6 +43,11 @@ Color Scene::trace(const Ray &ray)
 	Vector N = min_hit.N;                          //the normal at hit point
 	Vector V = -ray.D;                             //the view vector
 
+	Color cAmbiant, cDiffuse, cSpecular;
+	Color whiteC;
+	cAmbiant = cDiffuse = cSpecular = Color(0, 0, 0);
+	double whiteValue = -(min_hit.t - minZ) / (maxZ - minZ);
+	//cout << whiteValue << endl;
 	switch (renderMode)
 	{
 		case Scene::Phong:
@@ -63,9 +69,7 @@ Color Scene::trace(const Ray &ray)
 			*        Color*Color        dito
 			*        pow(a,b)           a to the power of b
 			****************************************************/
-			Color cAmbiant, cDiffuse, cSpecular;                  
 			// place holder
-			cAmbiant = cDiffuse = cSpecular = Color(0, 0, 0);
 			for (unsigned int i = 0; i < lights.size(); i++) {
 				Light* l = lights[i];
 				Vector vL = (l->position - hit).normalized();
@@ -82,9 +86,11 @@ Color Scene::trace(const Ray &ray)
 			}
 			return cAmbiant + cDiffuse + cSpecular;
 			break;
-		case Scene::ZBuffer:
-			break;
+		case Scene::ZBuffer:	// percent of interval : maxZ-minZ
+			whiteC.set(whiteValue);
+			return whiteC;
 		case Scene::Normal:
+
 			break;
 		default:
 			return Color(0, 0, 0);

@@ -26,12 +26,12 @@ int main(int argc, char *argv[])
 
     Raytracer raytracer;
 
-    if (!raytracer.readScene(argv[1])) {
+    if (!raytracer.readScene(argv[1], atoi( argv[2]))) { 
         cerr << "Error: reading scene from " << argv[1] << " failed - no output generated."<< endl;
         return 1;
     }
     std::string ofname;
-    if (argc>=3) {
+    if (argc>=4) {
         ofname = argv[2];
     } else {
         ofname = argv[1];
