@@ -43,15 +43,12 @@ Color Scene::trace(const Ray &ray)
 	Vector N = min_hit.N;                          //the normal at hit point
 	Vector V = -ray.D;                             //the view vector
 
-	Color cAmbiant, cDiffuse, cSpecular;
-	Color whiteC;
-	cAmbiant = cDiffuse = cSpecular = Color(0, 0, 0);
-	double whiteValue = -(min_hit.t - minZ) / (maxZ - minZ);
+
 	//cout << whiteValue << endl;
 	switch (renderMode)
 	{
 		case Scene::Phong:
-
+		{
 			/****************************************************
 			* This is where you should insert the color
 			* calculation (Phong model).
@@ -70,6 +67,7 @@ Color Scene::trace(const Ray &ray)
 			*        pow(a,b)           a to the power of b
 			****************************************************/
 			// place holder
+			Color cAmbiant, cDiffuse, cSpecular;
 			for (unsigned int i = 0; i < lights.size(); i++) {
 				Light* l = lights[i];
 				Vector vL = (l->position - hit).normalized();
@@ -86,12 +84,15 @@ Color Scene::trace(const Ray &ray)
 			}
 			return cAmbiant + cDiffuse + cSpecular;
 			break;
+		}
 		case Scene::ZBuffer:	// percent of interval : maxZ-minZ
-			whiteC.set(whiteValue);
+		{
+			Color whiteC;
+			whiteC.set((minZ - min_hit.t) / (maxZ - minZ));
 			return whiteC;
+		}
 		case Scene::Normal:
-
-			break;
+			return Color((N + 1) / 2);
 		default:
 			return Color(0, 0, 0);
 			break;
