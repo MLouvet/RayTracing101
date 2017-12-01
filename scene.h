@@ -22,8 +22,8 @@
 #include "light.h"
 #include "object.h"
 #include "image.h"
-const double minZ = 500;
-const double maxZ = 850;
+const double minZ = 550;
+const double maxZ = 1000;
 class Scene
 {
 private:
