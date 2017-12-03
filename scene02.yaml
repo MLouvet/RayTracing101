@@ -80,23 +80,3 @@ Objects:
     kd: 0.5
     ks: 0.3
     n: 32
-- type: triangle
-  point1: [-150, 450, 200]
-  point2: [-40, 500, 250]
-  point3: [-200, 550, 150]
-  e: 7.5
-  material:
-    color: [1.0,0.0,0.0]
-    ka: 0.01
-    kd: 0.06
-    ks: 0.9
-    n: 1
-- type: plane
-  normal: [-200, 600, 200]
-  d: 1000
-  material: 
-   color: [0.8,0.5,0.0]
-   ka: 1.0
-   kd: 0.5
-   ks: 0.5
-   n: 1
