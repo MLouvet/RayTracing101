@@ -85,7 +85,7 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		node["point1"] >> p1;
 		node["point2"] >> p2;
 		node["point3"] >> p3;
-		node["thickness"] >> thick;
+		node["e"] >> thick;
 		returnObject = new triangulu(p1, p2, p3, thick);
 	}
 
