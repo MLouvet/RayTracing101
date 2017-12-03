@@ -17,6 +17,7 @@
 #include "object.h"
 #include "sphere.h"
 #include "material.h"
+#include "triangulu.h"
 #include "light.h"
 #include "image.h"
 #include "yaml/yaml.h"
@@ -77,6 +78,15 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		node["d"] >> d;
 		Plane *plane = new Plane(normal, d);
 		returnObject = plane;
+	}
+	else if (objectType == "triangulu") {
+		double thick;
+		Point p1, p2, p3;
+		node["point1"] >> p1;
+		node["point2"] >> p2;
+		node["point3"] >> p3;
+		node["thickness"] >> thick;
+		returnObject = new triangulu(p1, p2, p3, thick);
 	}
 
     if (returnObject) {
