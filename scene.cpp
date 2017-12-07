@@ -68,9 +68,21 @@ Color Scene::trace(const Ray &ray)
 			****************************************************/
 			// place holder
 			Color cAmbiant, cDiffuse, cSpecular;
+			bool shadow = false;
 			for (unsigned int i = 0; i < lights.size(); i++) {
 				Light* l = lights[i];
 				Vector vL = (l->position - hit).normalized();
+				for each (Object* o in objects)
+				{
+					if (o == obj) continue;
+					Hit h = o->intersect(Ray(l->position, vL));
+					if (!h.no_hit) {
+						if (h.t > obj->intersect(Ray(l->position,vL)).t) {
+							shadow = true;
+							break;
+						}
+					}
+				}
 
 				//Calculation of ambient light: ka * La
 				cAmbiant = material->ka * material->color * l->color;
@@ -82,6 +94,8 @@ Color Scene::trace(const Ray &ray)
 				Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
 				cSpecular = material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
 			}
+			if (shadow)
+				return cAmbiant;
 			return cAmbiant + cDiffuse + cSpecular;
 			break;
 		}
