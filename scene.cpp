@@ -67,22 +67,32 @@ Color Scene::trace(const Ray &ray)
 			*        pow(a,b)           a to the power of b
 			****************************************************/
 			// place holder
-			Color cAmbiant, cDiffuse, cSpecular;
+			Color cAmbiant, cDiffuse, cSpecular, ret;
 			for (unsigned int i = 0; i < lights.size(); i++) {
 				Light* l = lights[i];
 				Vector vL = (l->position - hit).normalized();
-
+				bool noShade = true;
+				for each (Object* object in objects) {
+					if (obj != object && !(object->intersect(Ray(hit, vL))).no_hit) {
+							noShade = false;
+							break;
+						}
+				}
 				//Calculation of ambient light: ka * La
 				cAmbiant = material->ka * material->color * l->color;
 
 				//Calculation of diffuse reflection: kd * Ld * L.N
-				cDiffuse = material->kd * material->color * l->color * max(vL.dot(N), 0.0);
+				
+					cDiffuse = material->kd * material->color * l->color * max(vL.dot(N), 0.0);
 
-				//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
-				Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
-				cSpecular = material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
+					//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
+					Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
+					cSpecular = material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
+					if (!noShade) {ret = cAmbiant + cDiffuse + cSpecular;
+				}
+					else ret = cAmbiant;
 			}
-			return cAmbiant + cDiffuse + cSpecular;
+			return ret;
 			break;
 		}
 		case Scene::ZBuffer:	// percent of interval : maxZ-minZ
