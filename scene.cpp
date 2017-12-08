@@ -67,17 +67,23 @@ Color Scene::trace(const Ray &ray)
 			*        pow(a,b)           a to the power of b
 			****************************************************/
 			// place holder
-			Color cAmbiant, cDiffuse, cSpecular, ret;
+			Color cAmbiant, cDiffuse, cSpecular;
+			bool shadow = false;
 			for (unsigned int i = 0; i < lights.size(); i++) {
 				Light* l = lights[i];
 				Vector vL = (l->position - hit).normalized();
-				bool noShade = true;
-				for each (Object* object in objects) {
-					if (obj != object && !(object->intersect(Ray(hit, vL))).no_hit) {
-							noShade = false;
+				for each (Object* o in objects)
+				{
+					if (o == obj) continue;
+					Hit h = o->intersect(Ray(l->position, vL));
+					if (!h.no_hit) {
+						if (h.t > obj->intersect(Ray(l->position,vL)).t) {
+							shadow = true;
 							break;
 						}
+					}
 				}
+
 				//Calculation of ambient light: ka * La
 				cAmbiant = material->ka * material->color * l->color;
 
@@ -92,7 +98,9 @@ Color Scene::trace(const Ray &ray)
 				}
 					else ret = cAmbiant;
 			}
-			return ret;
+			if (shadow)
+				return cAmbiant;
+			return cAmbiant + cDiffuse + cSpecular;
 			break;
 		}
 		case Scene::ZBuffer:	// percent of interval : maxZ-minZ
