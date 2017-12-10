@@ -33,6 +33,7 @@ private:
 
 public:
 	Scene(int renderMode_) : renderMode(RenderMode(renderMode_)) {};
+	Color tracin(const Ray &ray);
 	Color trace(const Ray &ray);
 	void render(Image &img);
 	void addObject(Object *o);
@@ -45,6 +46,7 @@ public:
 		Phong = 0, ZBuffer = 1, Normal = 2
 	};
 	RenderMode renderMode;
+	int maxdeph = 2;
 };
 
 #endif /* end of include guard: SCENE_H_KNBLQLP6 */
