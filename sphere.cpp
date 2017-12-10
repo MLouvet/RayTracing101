@@ -19,6 +19,7 @@
 #include "sphere.h"
 #include <iostream>
 #include <math.h>
+#include <algorithm>
 
 /************************** Sphere **********************************/
 
@@ -71,11 +72,10 @@ Hit Sphere::intersect(const Ray &ray)
 		//Determining minimum distance between source of ray and collision
 		t1 = (-b - sqrt(d)) / (2 * a);
 		t2 = (-b + sqrt(d)) / (2 * a);
-
-		t = t1 < t2 ? t1 : t2;
+		t = std::min(t1, t2);
 	}
 
-
+	//if (t < 0) return Hit::NO_HIT();
 
 	/****************************************************
 	* RT1.2: NORMAL CALCULATION

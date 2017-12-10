@@ -1,4 +1,4 @@
-//
+ï»¿//
 //  Framework for a raytracer
 //  File: scene.cpp
 //
@@ -9,7 +9,7 @@
 //    Maarten Everts
 //    Jasper van de Gronde
 //	  Mathieu Louvet
-//    Bryan Vigée
+//    Bryan VigÃ©e
 //
 //  This framework is inspired by and uses code of the raytracer framework of 
 //  Bert Freudenberg that can be found at
@@ -20,12 +20,6 @@
 #include "scene.h"
 #include "material.h"
 
-
-Color Scene::tracin(const Ray & ray)
-{
-
-	return trace(ray);
-}
 
 Color Scene::trace(const Ray &ray)
 {
@@ -53,77 +47,79 @@ Color Scene::trace(const Ray &ray)
 	//cout << whiteValue << endl;
 	switch (renderMode)
 	{
-	case Scene::Phong:
-	{
-		/****************************************************
-		* This is where you should insert the color
-		* calculation (Phong model).
-		*
-		* Given: material, hit, N, V, lights[]
-		* Sought: color
-		*
-		* Hints: (see triple.h)
-		*        Triple.dot(Vector) dot product
-		*        Vector+Vector      vector sum
-		*        Vector-Vector      vector difference
-		*        Point-Point        yields vector
-		*        Vector.normalize() normalizes vector, returns length
-		*        double*Color        scales each color component (r,g,b)
-		*        Color*Color        dito
-		*        pow(a,b)           a to the power of b
-		****************************************************/
-		// place holder
-		Color cAmbiant, cDiffuse, cSpecular;
-		for (unsigned int i = 0; i < lights.size(); i++) {
-			Light* l = lights[i];
-			Vector vL = (l->position - hit).normalized();
+		case Scene::Phong:
+		{
+			/****************************************************
+			* This is where you should insert the color
+			* calculation (Phong model).
+			*
+			* Given: material, hit, N, V, lights[]
+			* Sought: color
+			*
+			* Hints: (see triple.h)
+			*        Triple.dot(Vector) dot product
+			*        Vector+Vector      vector sum
+			*        Vector-Vector      vector difference
+			*        Point-Point        yields vector
+			*        Vector.normalize() normalizes vector, returns length
+			*        double*Color        scales each color component (r,g,b)
+			*        Color*Color        dito
+			*        pow(a,b)           a to the power of b
+			****************************************************/
+			// place holder
+			Color cAmbiant, cDiffuse, cSpecular, cReflected;
 			bool shadow = false;
-			//Calculation of ambient light: ka * La
-			cAmbiant += material->ka * material->color * l->color;
-			for each (Object* o in objects)
-			{
-				if (o == obj) continue;
-				Hit h = o->intersect(Ray(l->position, vL));
-				if (!h.no_hit) {
-					if (h.t > obj->intersect(Ray(l->position, vL)).t) {
-						shadow = true;
-						break;
+
+			for (unsigned int i = 0; i < lights.size(); i++) {
+				Light* l = lights[i];
+				Vector vL = (l->position - hit).normalized();
+				Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
+				for each (Object* o in objects)
+				{
+					if (o == obj) continue;
+					Hit h = o->intersect(Ray(l->position, vL));
+					Hit initialHit = obj->intersect(Ray(l->position, vL));
+					if (!h.no_hit) {
+						if (h.t > initialHit.t) {
+							shadow = true;
+							break;
+						}
 					}
 				}
+
+				//Calculation of ambient light: ka * La
+				cAmbiant += material->ka * material->color * l->color;
+
+				//Calculation of diffuse reflection: kd * Ld * L.N
+				if (!shadow && maxdeph != MAX_DEPTH)
+					cDiffuse += material->kd * material->color * l->color * max(vL.dot(N), 0.0);
+
+				//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180Â° around N
+				if (!shadow && maxdeph != MAX_DEPTH)
+					cSpecular += material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
+
+				//Calculation of reflection
+				if (maxdeph-- > 0)
+					cReflected += material->ks * trace(Ray(hit, R));
 			}
-
-
-			//Calculation of diffuse reflection: kd * Ld * L.N
-			if (!shadow)
-				cDiffuse += material->kd * material->color * l->color * max(vL.dot(N), 0.0);
-
-			//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
-			if (!shadow && maxdeph > 0) {
-				maxdeph--;
-				Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
-				cSpecular += material->ks * l->color * pow(max(0.0, V.dot(R)), material->n) + trace(Ray(hit, -obj->intersect(ray).N));
-			}
+			return cAmbiant + cDiffuse + cSpecular + cReflected;
+			break;
 		}
-
-		return cAmbiant + cDiffuse + cSpecular;
-	}
-	case Scene::ZBuffer:	// percent of interval : maxZ-minZ
-	{
-		Color whiteC;
-		whiteC.set((minZ - min_hit.t) / (maxZ - minZ));
-		return whiteC;
-	}
-	case Scene::Normal:
-		return Color((N + 1) / 2);
-	default:
-		return Color(0, 0, 0);
-		break;
+		case Scene::ZBuffer:	// percent of interval : maxZ-minZ
+		{
+			Color whiteC;
+			whiteC.set((minZ - min_hit.t) / (maxZ - minZ));
+			return whiteC;
+		}
+		case Scene::Normal:
+			return Color((N + 1) / 2);
+		default:
+			return Color(0, 0, 0);
+			break;
 	}
 
 
 }
-
-
 
 void Scene::render(Image &img)
 {
@@ -131,7 +127,7 @@ void Scene::render(Image &img)
 	int h = img.height();
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
-			maxdeph = 2;
+			maxdeph = MAX_DEPTH;
 			Point pixel(x + 0.5, h - 1 - y + 0.5, 0);
 			Ray ray(eye, (pixel - eye).normalized());
 			Color col = trace(ray);

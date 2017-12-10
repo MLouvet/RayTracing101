@@ -16,6 +16,7 @@
 
 #ifndef SCENE_H_KNBLQLP6
 #define SCENE_H_KNBLQLP6
+#define MAX_DEPTH 1
 
 #include <vector>
 #include "triple.h"
@@ -33,7 +34,6 @@ private:
 
 public:
 	Scene(int renderMode_) : renderMode(RenderMode(renderMode_)) {};
-	Color tracin(const Ray &ray);
 	Color trace(const Ray &ray);
 	void render(Image &img);
 	void addObject(Object *o);
