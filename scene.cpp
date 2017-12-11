@@ -67,9 +67,8 @@ Color Scene::trace(const Ray &ray)
 			*        pow(a,b)           a to the power of b
 			****************************************************/
 			// place holder
-			Color cAmbiant(0, 0, 0), cDiffuse(0, 0, 0), cSpecular(0, 0, 0), cReflected(0,0,0);
+			Color cAmbiant, cDiffuse, cSpecular;
 			bool shadow = false;
-
 			for (unsigned int i = 0; i < lights.size(); i++) {
 				shadow = false;
 				Light* l = lights[i];
