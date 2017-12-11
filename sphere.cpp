@@ -75,7 +75,7 @@ Hit Sphere::intersect(const Ray &ray)
 		t = std::min(t1, t2);
 	}
 
-	//if (t < 0) return Hit::NO_HIT();
+	if (t < 0) return Hit::NO_HIT();
 
 	/****************************************************
 	* RT1.2: NORMAL CALCULATION

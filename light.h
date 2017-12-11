@@ -37,9 +37,10 @@ class Ray
 public:
     Point O;
     Vector D;
+	int depth;
 
-    Ray(const Point &from, const Vector &dir)
-        : O(from), D(dir)
+    Ray(const Point &from, const Vector &dir, const int maxDepth)
+        : O(from), D(dir), depth(maxDepth)
     { }
 
     Point at(double t) const

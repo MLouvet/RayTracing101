@@ -67,20 +67,22 @@ Color Scene::trace(const Ray &ray)
 			*        pow(a,b)           a to the power of b
 			****************************************************/
 			// place holder
-			Color cAmbiant, cDiffuse, cSpecular, cReflected;
+			Color cAmbiant(0, 0, 0), cDiffuse(0, 0, 0), cSpecular(0, 0, 0), cReflected(0,0,0);
 			bool shadow = false;
 
 			for (unsigned int i = 0; i < lights.size(); i++) {
+				shadow = false;
 				Light* l = lights[i];
-				Vector vL = (l->position - hit).normalized();
-				Vector R = (2 * (vL.dot(N)) * N - vL).normalized();
+				Vector vL = (l->position - hit);
+				double lightDistance = vL.length();
+				vL.normalize();
+				Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();
 				for each (Object* o in objects)
 				{
 					if (o == obj) continue;
-					Hit h = o->intersect(Ray(l->position, vL));
-					Hit initialHit = obj->intersect(Ray(l->position, vL));
+					Hit h = o->intersect(Ray(hit, vL, ray.depth));
 					if (!h.no_hit) {
-						if (h.t > initialHit.t) {
+						if (h.t < lightDistance) {
 							shadow = true;
 							break;
 						}
@@ -91,16 +93,19 @@ Color Scene::trace(const Ray &ray)
 				cAmbiant += material->ka * material->color * l->color;
 
 				//Calculation of diffuse reflection: kd * Ld * L.N
-				if (!shadow && maxdeph != MAX_DEPTH)
+				if (!shadow)
 					cDiffuse += material->kd * material->color * l->color * max(vL.dot(N), 0.0);
 
 				//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
-				if (!shadow && maxdeph != MAX_DEPTH)
+				if (!shadow)
 					cSpecular += material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
+			}
 
-				//Calculation of reflection
-				if (maxdeph-- > 0)
-					cReflected += material->ks * trace(Ray(hit, R));
+			//Calculation of reflection
+			Vector R = (2.0 * (N.dot(V)) * N - V).normalized();
+			if (ray.depth > 0) {
+				cReflected += material->ks * trace(Ray(hit, R, ray.depth - 1));
+				
 			}
 			return cAmbiant + cDiffuse + cSpecular + cReflected;
 			break;
@@ -129,7 +134,7 @@ void Scene::render(Image &img)
 		for (int x = 0; x < w; x++) {
 			maxdeph = MAX_DEPTH;
 			Point pixel(x + 0.5, h - 1 - y + 0.5, 0);
-			Ray ray(eye, (pixel - eye).normalized());
+			Ray ray(eye, (pixel - eye).normalized(), maxdeph);
 			Color col = trace(ray);
 			col.clamp();
 			img(x, y) = col;
