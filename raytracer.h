@@ -34,7 +34,7 @@ private:
 public:
     Raytracer() { }
 
-    bool readScene(const std::string& inputFilename, const int renderMode);
+	bool readScene(const std::string& inputFilename, Scene::RenderMode mode, int aaLevel);
     void renderToFile(const std::string& outputFilename);
 };
 

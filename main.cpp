@@ -16,31 +16,99 @@
 
 #include "raytracer.h"
 
+int outputError();
 int main(int argc, char *argv[])
 {
-    cout << "Introduction to Computer Graphics - Raytracer" << endl << endl;
-    if (argc < 2 || argc > 3) {
-        cerr << "Usage: " << argv[0] << " in-file [out-file.png]" << endl;
-        return 1;
-    }
+	Raytracer raytracer;
+	string ofname = "";
+	Scene::RenderMode renderMode = Scene::RenderMode::None;
+	int aaLevel = -1;
 
-    Raytracer raytracer;
+	cout << "Introduction to Computer Graphics - Raytracer" << endl << endl;
 
-    if (!raytracer.readScene(argv[1], atoi( argv[2]))) { 
-        cerr << "Error: reading scene from " << argv[1] << " failed - no output generated."<< endl;
-        return 1;
-    }
-    std::string ofname;
-    if (argc>=4) {
-        ofname = argv[2];
-    } else {
-        ofname = argv[1];
-        if (ofname.size()>=5 && ofname.substr(ofname.size()-5)==".yaml") {
-            ofname = ofname.substr(0,ofname.size()-5);
-        }
-        ofname += ".png";
-    }
-    raytracer.renderToFile(ofname);
 
-    return 0;
+
+	//Reading parameters
+	if (argc < 2 || argc % 2 == 1) {	// Small preview check
+		cerr << "Parameter missing or left alone." << endl;
+		return outputError();
+	}
+	try
+	{
+		for (int i = 2; i + 1 < argc; i += 2)
+		{
+			string optType = argv[i], optValue = argv[i + 1];
+			if (optType == "-o") {
+				if (ofname != "") {	//Output file check
+					cerr << "Output file already selected. Exiting" << endl;
+					return 2;
+				}
+				ofname = optValue;
+			}
+			else if (optType == "-r") { //Render mode check
+				if (renderMode != Scene::RenderMode::None) {
+					cerr << "Illumination mode already selected. Exiting" << endl;
+					return 2;
+				}
+				if (optValue == "phong")
+					renderMode = Scene::RenderMode::Phong;
+				if (optValue == "z-buffer")
+					renderMode = Scene::RenderMode::ZBuffer;
+				if (optValue == "normal")
+					renderMode = Scene::RenderMode::Normal;
+				if (optValue == "flat")
+					renderMode = Scene::RenderMode::Flat;
+
+				else {
+					cerr << "Unknown illumination mode. Exiting" << endl;
+					return 2;
+				}
+			}
+			else if (optType == "-a") {//Antialiasing check
+				if (aaLevel != -1) {
+					cerr << "Anti-aliasing level already selected. Exiting" << endl;
+					return 2;
+				}
+				if (stoi(optValue) < 1) {
+					cerr << "Invalid anti-aliasing level selected. Exiting" << endl;
+					return 2;
+				}
+				else aaLevel = stoi(optValue);
+			}
+		}
+	}
+	catch (const std::exception& e)
+	{
+		cerr << e.what();
+		outputError();
+	}
+	if (renderMode == Scene::RenderMode::None)
+		renderMode = Scene::RenderMode::Phong;
+	if (aaLevel == -1)
+		aaLevel = 1;
+
+	//Generating scene
+
+	if (!raytracer.readScene(argv[1], renderMode, aaLevel)) {
+		cerr << "Error: reading scene from " << argv[1] << " failed - no output generated." << endl;
+		return 1;
+	}
+	else if (ofname != "") {
+		ofname = argv[1];
+		if (ofname.size() >= 5 && ofname.substr(ofname.size() - 5) == ".yaml") {
+			ofname = ofname.substr(0, ofname.size() - 5);
+		}
+		ofname += ".png";
+	}
+	raytracer.renderToFile(ofname);
+	return 0;
+}
+
+int outputError() {
+	cerr << "Usage: " << "RayTracer in-file.yaml" << endl;
+	cerr << "Options available:" << endl
+		<< "\t-o output_file.png to specify output file" << endl
+		<< "\t-r for render: phong (default) / z-buffer / normal / flat" << endl
+		<< "\t-a for antialiasing level: 1 (default), 2, 3, any strictly positive integer. Might result in long render time for large values";
+	return 1;
 }

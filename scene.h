@@ -33,7 +33,11 @@ private:
 	Triple eye;
 
 public:
-	Scene(int renderMode_) : renderMode(RenderMode(renderMode_)) {};
+	enum RenderMode
+	{
+		Phong = 0, ZBuffer = 1, Normal = 2, Flat = 3, None
+	};
+	Scene(RenderMode mode, int antiAliasingLevel) : renderMode(mode), aaLevel(antiAliasingLevel) {};
 	Color trace(const Ray &ray);
 	void render(Image &img);
 	void addObject(Object *o);
@@ -41,10 +45,7 @@ public:
 	void setEye(Triple e);
 	unsigned int getNumObjects() { return objects.size(); }
 	unsigned int getNumLights() { return lights.size(); }
-	enum RenderMode
-	{
-		Phong = 0, ZBuffer = 1, Normal = 2
-	};
+	int aaLevel;
 	RenderMode renderMode;
 	int maxdeph = 2;
 };

@@ -110,10 +110,10 @@ Light* Raytracer::parseLight(const YAML::Node& node)
 * Read a scene from file
 */
 
-bool Raytracer::readScene(const std::string& inputFilename, const int renderMode)
+bool Raytracer::readScene(const std::string& inputFilename, Scene::RenderMode mode, int aaLevel)
 {
     // Initialize a new scene
-    scene = new Scene(renderMode);
+    scene = new Scene(mode, aaLevel);
 
     // Open file stream for reading and have the YAML module parse it
     std::ifstream fin(inputFilename.c_str());
