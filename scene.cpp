@@ -134,6 +134,7 @@ void Scene::render(Image &img)
 	int h = img.height();
 	double pointOffset = 1.0 / aaLevel;
 	double pixelBorderOffset = 0.5 * pointOffset;
+#pragma omp parallel for
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
 			maxdepth = MAX_DEPTH;
@@ -148,7 +149,7 @@ void Scene::render(Image &img)
 					col = col + trace(ray);
 				}
 			}
-			col /= pow(aaLevel,2);
+			col /= pow(aaLevel, 2);
 			col.clamp();
 			img(x, y) = col;
 		}
