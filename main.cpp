@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 		cerr << "Error: reading scene from " << argv[1] << " failed - no output generated." << endl;
 		return 1;
 	}
-	else if (ofname != "") {
+	else if (ofname == "") {
 		ofname = argv[1];
 		if (ofname.size() >= 5 && ofname.substr(ofname.size() - 5) == ".yaml") {
 			ofname = ofname.substr(0, ofname.size() - 5);

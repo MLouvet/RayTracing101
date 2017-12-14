@@ -47,7 +47,7 @@ public:
 	unsigned int getNumLights() { return lights.size(); }
 	int aaLevel;
 	RenderMode renderMode;
-	int maxdeph = 2;
+	int maxdepth = 2;
 };
 
 #endif /* end of include guard: SCENE_H_KNBLQLP6 */

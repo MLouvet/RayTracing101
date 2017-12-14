@@ -75,7 +75,7 @@ Color Scene::trace(const Ray &ray)
 				Vector vL = (l->position - hit);
 				double lightDistance = vL.length();
 				vL.normalize();
-				Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();
+				Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();/*
 				for each (Object* o in objects)
 				{
 					if (o == obj) continue;
@@ -86,7 +86,7 @@ Color Scene::trace(const Ray &ray)
 							break;
 						}
 					}
-				}
+				}*/
 
 				//Calculation of ambient light: ka * La
 				cAmbiant += material->ka * material->color * l->color;
@@ -101,11 +101,11 @@ Color Scene::trace(const Ray &ray)
 			}
 
 			//Calculation of reflection
-			Vector R = (2.0 * (N.dot(V)) * N - V).normalized();
-			if (ray.depth > 0) {
-				cReflected += material->ks * trace(Ray(hit, R, ray.depth - 1));
-				
-			}
+			//Vector R = (2.0 * (N.dot(V)) * N - V).normalized();
+			//if (ray.depth > 0) {
+			//	cReflected += material->ks * trace(Ray(hit, R, ray.depth - 1));
+
+			//}
 			return cAmbiant + cDiffuse + cSpecular + cReflected;
 			break;
 		}
@@ -117,7 +117,10 @@ Color Scene::trace(const Ray &ray)
 		}
 		case Scene::Normal:
 			return Color((N + 1) / 2);
+		case Scene::Flat:
+			return material->color;
 		default:
+			cerr << "Render mode not implemented";
 			return Color(0, 0, 0);
 			break;
 	}
@@ -129,12 +132,23 @@ void Scene::render(Image &img)
 {
 	int w = img.width();
 	int h = img.height();
+	double pointOffset = 1.0 / aaLevel;
+	double pixelBorderOffset = 0.5 * pointOffset;
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
-			maxdeph = MAX_DEPTH;
-			Point pixel(x + 0.5, h - 1 - y + 0.5, 0);
-			Ray ray(eye, (pixel - eye).normalized(), maxdeph);
-			Color col = trace(ray);
+			maxdepth = MAX_DEPTH;
+			Color col;
+			double aaOffset = pixelBorderOffset;
+			for (int i = 0; i < aaLevel; i++)
+			{
+				for (int j = 0; j < aaLevel; j++)
+				{
+					Point pixel((double)x + pixelBorderOffset + (double)i * pointOffset, (double)h - 1.0 - (double)y + pixelBorderOffset + (double)j * pointOffset, 0);
+					Ray ray(eye, (pixel - eye).normalized(), maxdepth);
+					col = col + trace(ray);
+				}
+			}
+			col /= pow(aaLevel,2);
 			col.clamp();
 			img(x, y) = col;
 		}
