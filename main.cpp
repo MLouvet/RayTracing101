@@ -15,7 +15,9 @@
 //
 
 #include "raytracer.h"
-
+#ifdef WIN32
+#include "windows.h"
+#endif
 int outputError();
 int main(int argc, char *argv[])
 {
@@ -101,6 +103,9 @@ int main(int argc, char *argv[])
 		ofname += ".png";
 	}
 	raytracer.renderToFile(ofname);
+#ifdef WIN32
+	ShellExecute(0, 0, ofname.c_str(), 0, 0, SW_SHOW);
+#endif
 	return 0;
 }
 
