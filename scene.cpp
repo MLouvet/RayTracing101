@@ -75,7 +75,7 @@ Color Scene::trace(const Ray &ray)
 				Vector vL = (l->position - hit);
 				double lightDistance = vL.length();
 				vL.normalize();
-				Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();/*
+				Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();
 				for each (Object* o in objects)
 				{
 					if (o == obj) continue;
@@ -86,7 +86,7 @@ Color Scene::trace(const Ray &ray)
 							break;
 						}
 					}
-				}*/
+				}
 
 				//Calculation of ambient light: ka * La
 				cAmbiant += material->ka * material->color * l->color;
@@ -101,11 +101,11 @@ Color Scene::trace(const Ray &ray)
 			}
 
 			//Calculation of reflection
-			//Vector R = (2.0 * (N.dot(V)) * N - V).normalized();
-			//if (ray.depth > 0) {
-			//	cReflected += material->ks * trace(Ray(hit, R, ray.depth - 1));
+			Vector R = (2.0 * (N.dot(V)) * N - V).normalized();
+			if (ray.depth > 0) {
+				cReflected += material->ks * trace(Ray(hit, R, ray.depth - 1));
 
-			//}
+			}
 			return cAmbiant + cDiffuse + cSpecular + cReflected;
 			break;
 		}
