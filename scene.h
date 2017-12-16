@@ -53,6 +53,7 @@ public:
 	void setRenderShadows(bool b);
 	void setMaxDepth(int depth);
 	void setSuperSampling(int superSampling);
+	void setRenderMode(RenderMode mode);
 	unsigned int getNumObjects() { return objects.size(); }
 	unsigned int getNumLights() { return lights.size(); }
 	unsigned int getSceneWidth() { return camera.width; }

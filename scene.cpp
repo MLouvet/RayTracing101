@@ -190,3 +190,8 @@ void Scene::setSuperSampling(int superSampling)
 {
 	aaLevel = superSampling;
 }
+
+void Scene::setRenderMode(RenderMode mode)
+{
+	renderMode = mode;
+}

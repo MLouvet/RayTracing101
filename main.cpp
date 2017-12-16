@@ -36,43 +36,23 @@ int main(int argc, char *argv[])
 	}
 	try
 	{
-		//for (int i = 2; i + 1 < argc; i += 2)
-		//{
-		//	string optType = argv[i], optValue = argv[i + 1];
-		//	if (optType == "-o") {
-		//		if (ofname != "") {	//Output file check
-		//			cerr << "Output file already selected. Exiting" << endl;
-		//			return 2;
-		//		}
-		//		ofname = optValue;
-		//	}
-		//	else if (optType == "-r") { //Render mode check
-		//		if (renderMode != Scene::RenderMode::None) {
-		//			cerr << "Illumination mode already selected. Exiting" << endl;
-		//			return 2;
-		//		}
-		//		if (optValue == "phong")
-		//			renderMode = Scene::RenderMode::Phong;
-		//		if (optValue == "z-buffer")
-		//			renderMode = Scene::RenderMode::ZBuffer;
-		//		if (optValue == "normal")
-		//			renderMode = Scene::RenderMode::Normal;
-		//		if (optValue == "flat")
-		//			renderMode = Scene::RenderMode::Flat;
-		//		else {
-		//			cerr << "Unknown illumination mode. Exiting" << endl;
-		//			return 2;
-		//		}
-		//	}
-		//}
+		for (int i = 2; i + 1 < argc; i += 2)
+		{
+			string optType = argv[i], optValue = argv[i + 1];
+			if (optType == "-o") {
+				if (ofname != "") {	//Output file check
+					cerr << "Output file already selected. Exiting" << endl;
+					return 2;
+				}
+				ofname = optValue;
+			}
+		}
 	}
 	catch (const std::exception& e)
 	{
 		cerr << e.what();
 		outputError();
 	}
-	//if (renderMode == Scene::RenderMode::None)
-	//	renderMode = Scene::RenderMode::Phong;
 
 	//Generating scene
 

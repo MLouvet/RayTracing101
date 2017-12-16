@@ -68,6 +68,24 @@ Camera Raytracer::parseCamera(const YAML::Node & node)
 	return c;
 }
 
+
+Scene::RenderMode Raytracer::parseRenderMode(const YAML::Node & node)
+{
+	string optValue = node;
+	if (optValue == "phong")
+		return Scene::RenderMode::Phong;
+	if (optValue == "z-buffer")
+		return Scene::RenderMode::ZBuffer;
+	if (optValue == "normal")
+		return Scene::RenderMode::Normal;
+	if (optValue == "flat")
+		return Scene::RenderMode::Flat;
+	else {
+		cerr << "Unknown illumination mode. Using Phong render mode as default remplacement" << endl;
+		return Scene::RenderMode::Phong;
+	}
+}
+
 Object* Raytracer::parseObject(const YAML::Node& node)
 {
 	Object *returnObject = NULL;
@@ -99,35 +117,6 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		node["e"] >> thick;
 		returnObject = new Triangle(p1, p2, p3, thick);
 	}
-	//else if (objectType == "Shadows") {
-	//	bool b;
-	//	node["Shadows"] >> b;
-	//	scene->setRenderShadows(b);
-	//}
-	//else if (objectType == "MaxRecursionDepth") {
-	//	int depth;
-	//	node["MaxRecursionDepth"] >> depth;
-	//	scene->setMaxDepth(depth);
-	//}
-	//else if (objectType == "SuperSampling") {
-	//	int aaLevel;
-	//	node["SuperSampling"] >> aaLevel;
-	//	scene->setSuperSampling(aaLevel);
-	//	returnObject = aaLevel;
-	//}
-	//else if(objec)
-	//	if (optValue == "phong")
-	//		renderMode = Scene::RenderMode::Phong;
-	//if (optValue == "z-buffer")
-	//	renderMode = Scene::RenderMode::ZBuffer;
-	//if (optValue == "normal")
-	//	renderMode = Scene::RenderMode::Normal;
-	//if (optValue == "flat")
-	//	renderMode = Scene::RenderMode::Flat;
-	//else {
-	//	cerr << "Unknown illumination mode. Exiting" << endl;
-	//	return 2;
-	//}
 	if (returnObject) {
 		// read the material and attach to object
 		returnObject->material = parseMaterial(node["material"]);
@@ -144,6 +133,7 @@ Light* Raytracer::parseLight(const YAML::Node& node)
 	node["color"] >> color;
 	return new Light(position, color);
 }
+
 
 /*
 * Read a scene from file
@@ -189,7 +179,11 @@ bool Raytracer::readScene(const std::string& inputFilename)
 				scene->setSuperSampling(doc["SuperSampling"]["factor"]);
 			}
 			catch (const std::exception&) {}
-
+			try
+			{
+				scene->setRenderMode(parseRenderMode(doc["Render"]));
+			}
+			catch (const std::exception& e) {}
 
 
 
