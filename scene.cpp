@@ -76,17 +76,18 @@ Color Scene::trace(const Ray &ray)
 				double lightDistance = vL.length();
 				vL.normalize();
 				Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();
-				for each (Object* o in objects)
-				{
-					if (o == obj) continue;
-					Hit h = o->intersect(Ray(hit, vL, ray.depth));
-					if (!h.no_hit) {
-						if (h.t < lightDistance) {
-							shadow = true;
-							break;
+				if (renderShadows)
+					for each (Object* o in objects)
+					{
+						if (o == obj) continue;
+						Hit h = o->intersect(Ray(hit, vL, ray.depth));
+						if (!h.no_hit) {
+							if (h.t < lightDistance) {
+								shadow = true;
+								break;
+							}
 						}
 					}
-				}
 
 				//Calculation of ambient light: ka * La
 				cAmbiant += material->ka * material->color * l->color;
@@ -130,22 +131,21 @@ Color Scene::trace(const Ray &ray)
 
 void Scene::render(Image &img)
 {
-	int w = img.width();
-	int h = img.height();
+	int w = camera.width;
+	int h = camera.height;
 	double pointOffset = 1.0 / aaLevel;
 	double pixelBorderOffset = 0.5 * pointOffset;
 #pragma omp parallel for
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
-			maxdepth = MAX_DEPTH;
 			Color col;
 			double aaOffset = pixelBorderOffset;
 			for (int i = 0; i < aaLevel; i++)
 			{
 				for (int j = 0; j < aaLevel; j++)
 				{
-					Point pixel((double)x + pixelBorderOffset + (double)i * pointOffset, (double)h - 1.0 - (double)y + pixelBorderOffset + (double)j * pointOffset, 0);
-					Ray ray(eye, (pixel - eye).normalized(), maxdepth);
+					Point pixel((camera.center.x + x)* camera.up.y - w / 2 + pixelBorderOffset + i * pointOffset, (camera.center.y - y - 1.0) * camera.up.y + h / 2.0 + pixelBorderOffset + j * pointOffset, 0);
+					Ray ray(camera.eye, (pixel - camera.eye).normalized(), maxdepth);
 					col = col + trace(ray);
 				}
 			}
@@ -168,5 +168,25 @@ void Scene::addLight(Light *l)
 
 void Scene::setEye(Triple e)
 {
-	eye = e;
+	camera = Camera(e, Triple(e.x, e.y, 0), Triple(0, 1, 0), 400, 400);
+}
+
+void Scene::setCamera(Camera c)
+{
+	camera = c;
+}
+
+void Scene::setRenderShadows(bool b)
+{
+	renderShadows = b;
+}
+
+void Scene::setMaxDepth(int depth)
+{
+	maxdepth = depth;
+}
+
+void Scene::setSuperSampling(int superSampling)
+{
+	aaLevel = superSampling;
 }

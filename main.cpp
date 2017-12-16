@@ -23,8 +23,7 @@ int main(int argc, char *argv[])
 {
 	Raytracer raytracer;
 	string ofname = "";
-	Scene::RenderMode renderMode = Scene::RenderMode::None;
-	int aaLevel = -1;
+	//Scene::RenderMode renderMode = Scene::RenderMode::None;
 
 	cout << "Introduction to Computer Graphics - Raytracer" << endl << endl;
 
@@ -37,61 +36,47 @@ int main(int argc, char *argv[])
 	}
 	try
 	{
-		for (int i = 2; i + 1 < argc; i += 2)
-		{
-			string optType = argv[i], optValue = argv[i + 1];
-			if (optType == "-o") {
-				if (ofname != "") {	//Output file check
-					cerr << "Output file already selected. Exiting" << endl;
-					return 2;
-				}
-				ofname = optValue;
-			}
-			else if (optType == "-r") { //Render mode check
-				if (renderMode != Scene::RenderMode::None) {
-					cerr << "Illumination mode already selected. Exiting" << endl;
-					return 2;
-				}
-				if (optValue == "phong")
-					renderMode = Scene::RenderMode::Phong;
-				if (optValue == "z-buffer")
-					renderMode = Scene::RenderMode::ZBuffer;
-				if (optValue == "normal")
-					renderMode = Scene::RenderMode::Normal;
-				if (optValue == "flat")
-					renderMode = Scene::RenderMode::Flat;
-
-				else {
-					cerr << "Unknown illumination mode. Exiting" << endl;
-					return 2;
-				}
-			}
-			else if (optType == "-a") {//Antialiasing check
-				if (aaLevel != -1) {
-					cerr << "Anti-aliasing level already selected. Exiting" << endl;
-					return 2;
-				}
-				if (stoi(optValue) < 1) {
-					cerr << "Invalid anti-aliasing level selected. Exiting" << endl;
-					return 2;
-				}
-				else aaLevel = stoi(optValue);
-			}
-		}
+		//for (int i = 2; i + 1 < argc; i += 2)
+		//{
+		//	string optType = argv[i], optValue = argv[i + 1];
+		//	if (optType == "-o") {
+		//		if (ofname != "") {	//Output file check
+		//			cerr << "Output file already selected. Exiting" << endl;
+		//			return 2;
+		//		}
+		//		ofname = optValue;
+		//	}
+		//	else if (optType == "-r") { //Render mode check
+		//		if (renderMode != Scene::RenderMode::None) {
+		//			cerr << "Illumination mode already selected. Exiting" << endl;
+		//			return 2;
+		//		}
+		//		if (optValue == "phong")
+		//			renderMode = Scene::RenderMode::Phong;
+		//		if (optValue == "z-buffer")
+		//			renderMode = Scene::RenderMode::ZBuffer;
+		//		if (optValue == "normal")
+		//			renderMode = Scene::RenderMode::Normal;
+		//		if (optValue == "flat")
+		//			renderMode = Scene::RenderMode::Flat;
+		//		else {
+		//			cerr << "Unknown illumination mode. Exiting" << endl;
+		//			return 2;
+		//		}
+		//	}
+		//}
 	}
 	catch (const std::exception& e)
 	{
 		cerr << e.what();
 		outputError();
 	}
-	if (renderMode == Scene::RenderMode::None)
-		renderMode = Scene::RenderMode::Phong;
-	if (aaLevel == -1)
-		aaLevel = 1;
+	//if (renderMode == Scene::RenderMode::None)
+	//	renderMode = Scene::RenderMode::Phong;
 
 	//Generating scene
 
-	if (!raytracer.readScene(argv[1], renderMode, aaLevel)) {
+	if (!raytracer.readScene(argv[1])) {
 		cerr << "Error: reading scene from " << argv[1] << " failed - no output generated." << endl;
 		return 1;
 	}
