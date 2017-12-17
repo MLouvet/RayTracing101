@@ -137,8 +137,6 @@ void Scene::render(Image &img)
 	double pixelBorderOffset = 0.5 * pointOffset;
 	double xZoomOffset = (1.0 - camera.up.y) *0.5 * w;
 	double yZoomOffset = (1.0 - camera.up.y) *0.5 * h;
-	cerr << "X offset: " << xZoomOffset << endl;
-	cerr << "Y offset: " << yZoomOffset << endl;
 #pragma omp parallel for
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
@@ -148,16 +146,11 @@ void Scene::render(Image &img)
 			{
 				for (int j = 0; j < aaLevel; j++)
 				{
-					Point pixel(x * camera.up.y + xZoomOffset + camera.center.x - w / 2 /*+ pixelBorderOffset + i * pointOffset*/,
-						(-y - 1.0) * camera.up.y - yZoomOffset + camera.center.y + h / 2 /*+ pixelBorderOffset + j * pointOffset*/,
+					Point pixel((x+ pixelBorderOffset + i * pointOffset) * camera.up.y + xZoomOffset + camera.center.x - w / 2,
+						(-y - 1.0 + pixelBorderOffset + j * pointOffset) * camera.up.y - yZoomOffset + camera.center.y + h / 2,
 						0);
-					//Point pixel((camera.center.x + x)* camera.up.y - w / 2 + pixelBorderOffset + i * pointOffset, (camera.center.y - y - 1.0) * camera.up.y + h / 2.0 + pixelBorderOffset + j * pointOffset, 0);
-					//Point pixel((camera.center.x + x)* camera.up.y - w / 2 + pixelBorderOffset + i * pointOffset, (camera.center.y - y - 1.0) * camera.up.y + h / 2.0 + pixelBorderOffset + j * pointOffset, 0);
-					//Point pixel((camera.center.x + x)* camera.up.y - w / 2 + pixelBorderOffset + i * pointOffset, (camera.center.y - y - 1.0) * camera.up.y + h / 2.0 + pixelBorderOffset + j * pointOffset, 0);
 					Ray ray(camera.eye, (pixel - camera.eye).normalized(), maxdepth);
 					col = col + trace(ray);
-					if ((x == 0 && y == h - 1) || (x == w - 1 && y == 0))
-						cerr << pixel << endl;
 				}
 			}
 			col /= pow(aaLevel, 2);
