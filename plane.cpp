@@ -20,3 +20,8 @@ Hit Plane::intersect(const Ray & ray)
 	double t = (-N.dot(ray.O) - d) / (N.dot(ray.D));
 	return Hit(t, N.normalized());
 }
+
+Color Plane::colorAt(Point p)
+{
+	return material->color;
+}

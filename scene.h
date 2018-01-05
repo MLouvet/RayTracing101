@@ -31,10 +31,11 @@ class Scene
 public:
 	enum RenderMode
 	{
-		Phong = 0, ZBuffer = 1, Normal = 2, Flat = 3, None
+		Phong = 0, ZBuffer = 1, Normal = 2, Flat = 3,None
 	};
 private:
 	bool renderShadows;
+	bool renderTextures;
 	int maxdepth;
 	int aaLevel;
 	RenderMode renderMode;
@@ -43,14 +44,16 @@ private:
 	Camera camera;
 
 public:
-	Scene() : renderShadows(true), renderMode(Phong), aaLevel(1), maxdepth(1) {};
+	Scene() : renderShadows(true), renderTextures(false), renderMode(Phong), aaLevel(1), maxdepth(1) {};
 	Color trace(const Ray &ray);
 	void render(Image &img);
 	void addObject(Object *o);
 	void addLight(Light *l);
+	bool getRenderTextures();
 	void setEye(Triple e);
 	void setCamera(Camera c);
 	void setRenderShadows(bool b);
+	void setRenderTextures(bool b);
 	void setMaxDepth(int depth);
 	void setSuperSampling(int superSampling);
 	void setRenderMode(RenderMode mode);

@@ -28,6 +28,7 @@ public:
 
     const Point position;
     const double r;
+	virtual Color colorAt(Point p);
 };
 
 #endif /* end of include guard: SPHERE_H_115209AE */

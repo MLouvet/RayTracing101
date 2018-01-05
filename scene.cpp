@@ -67,7 +67,7 @@ Color Scene::trace(const Ray &ray)
 			*        pow(a,b)           a to the power of b
 			****************************************************/
 			// place holder
-			Color cAmbiant, cDiffuse, cSpecular, cReflected;
+			Color cAmbiant, cDiffuse, cSpecular, cReflected, cSurface;
 			bool shadow = false;
 			for (unsigned int i = 0; i < lights.size(); i++) {
 				shadow = false;
@@ -89,12 +89,14 @@ Color Scene::trace(const Ray &ray)
 						}
 					}
 
+				//Determining adequate surface color
+				cSurface = (renderTextures && obj->texture != NULL) ? obj->colorAt(hit) : material->color;
 				//Calculation of ambient light: ka * La
-				cAmbiant += material->ka * material->color * l->color;
+				cAmbiant += material->ka * cSurface * l->color;
 
 				//Calculation of diffuse reflection: kd * Ld * L.N
 				if (!shadow)
-					cDiffuse += material->kd * material->color * l->color * max(vL.dot(N), 0.0);
+					cDiffuse += material->kd * cSurface * l->color * max(vL.dot(N), 0.0);
 
 				//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
 				if (!shadow)
@@ -170,6 +172,11 @@ void Scene::addLight(Light *l)
 	lights.push_back(l);
 }
 
+bool Scene::getRenderTextures()
+{
+	return renderTextures;
+}
+
 void Scene::setEye(Triple e)
 {
 	camera = Camera(e, Triple(e.x, e.y, 0), Triple(0, 1, 0), 400, 400);
@@ -183,6 +190,11 @@ void Scene::setCamera(Camera c)
 void Scene::setRenderShadows(bool b)
 {
 	renderShadows = b;
+}
+
+void Scene::setRenderTextures(bool b)
+{
+	renderTextures = b;
 }
 
 void Scene::setMaxDepth(int depth)

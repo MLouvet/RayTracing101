@@ -80,10 +80,8 @@ Scene::RenderMode Raytracer::parseRenderMode(const YAML::Node & node)
 		return Scene::RenderMode::Normal;
 	if (optValue == "flat")
 		return Scene::RenderMode::Flat;
-	else {
-		cerr << "Unknown illumination mode. Using Phong render mode as default remplacement" << endl;
-		return Scene::RenderMode::Phong;
-	}
+	else
+		throw new exception("Unknown illumination mode.");
 }
 
 Object* Raytracer::parseObject(const YAML::Node& node)
@@ -117,7 +115,16 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		node["e"] >> thick;
 		returnObject = new Triangle(p1, p2, p3, thick);
 	}
+
 	if (returnObject) {
+		// Loading a potential texture
+		if (node.FindValue("texturePath") != 0) {
+			string s = node["texturePath"];
+			returnObject->texture = new Image(s.c_str());
+		}
+		else
+			returnObject->texture = NULL;
+	
 		// read the material and attach to object
 		returnObject->material = parseMaterial(node["material"]);
 	}
@@ -172,6 +179,10 @@ bool Raytracer::readScene(const std::string& inputFilename)
 			}
 			catch (const std::exception&) {}
 			try {
+				scene->setRenderTextures(doc["Textures"]);
+			}
+			catch (const std::exception&) {}
+			try {
 				scene->setMaxDepth(doc["MaxRecursionDepth"]);
 			}
 			catch (const std::exception&) {}
@@ -183,7 +194,7 @@ bool Raytracer::readScene(const std::string& inputFilename)
 			{
 				scene->setRenderMode(parseRenderMode(doc["Render"]));
 			}
-			catch (const std::exception& e) {}
+			catch (const std::exception&) {}
 
 
 

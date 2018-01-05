@@ -24,6 +24,11 @@ Hit Triangle::intersect(const Ray & ray)
 	return Hit::NO_HIT();
 }
 
+Color Triangle::colorAt(Point p)
+{
+	return material->color;
+}
+
 Triangle::~Triangle()
 {
 }

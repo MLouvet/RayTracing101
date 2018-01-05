@@ -1,10 +1,12 @@
 #pragma once
 #include "object.h"
+#include "material.h"
 class Triangle :
 	public Object
 {
 public:
 	virtual Hit intersect(const Ray &ray);
+	virtual Color colorAt(Point p);
 
 	~Triangle();
 	const Vector N;

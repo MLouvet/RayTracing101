@@ -19,7 +19,10 @@
 #include "sphere.h"
 #include <iostream>
 #include <math.h>
+#include <cmath>
 #include <algorithm>
+
+constexpr auto M_PI = 3.14159265358979323846;
 
 /************************** Sphere **********************************/
 
@@ -89,4 +92,14 @@ Hit Sphere::intersect(const Ray &ray)
 	intersection = ray.D * t + ray.O;
 	Vector N = intersection - position;
 	return Hit(t, N.normalized());
+}
+
+Color Sphere::colorAt(Point p)
+{
+	//Using U-V mapping
+	Vector N = (this->position - p).normalized();
+	double u, v;
+	u = 0.5 + atan2(N.z, N.x) / (2 * M_PI);
+	v = 0.5 - asin(N.y) / M_PI;
+	return texture->colorAt(u, v);
 }

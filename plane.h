@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include "material.h"
 class Plane :
 	public Object
 {
@@ -8,5 +9,6 @@ public:
 	virtual Hit intersect(const Ray &ray);
 	const Vector N;
 	const double d;
+	virtual Color colorAt(Point p);
 };
 

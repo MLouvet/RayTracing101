@@ -19,14 +19,16 @@
 
 #include "triple.h"
 #include "light.h"
+#include "image.h"
 
 class Material;
 
 class Object {
 public:
     Material *material;
-
-    virtual ~Object() { }
+	Image *texture;
+	virtual ~Object() { }
+	virtual Color colorAt(Point p) = 0;
 
     virtual Hit intersect(const Ray &ray) = 0;
 };
