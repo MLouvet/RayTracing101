@@ -99,7 +99,7 @@ Color Sphere::colorAt(Point p)
 	//Using U-V mapping
 	Vector N = (this->position - p).normalized();
 	double u, v;
-	u = 0.5 + atan2(N.z, N.x) / (2 * M_PI);
-	v = 0.5 - asin(N.y) / M_PI;
+	u = 0.5 + atan2(N.x, -N.y) / (2 * M_PI);
+	v = 0.5 - asin(-N.z) / M_PI;
 	return texture->colorAt(u, v);
 }
