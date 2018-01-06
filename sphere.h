@@ -18,6 +18,7 @@
 #define SPHERE_H_115209AE
 
 #include "object.h"
+#include "triple.h"
 
 class Sphere : public Object
 {
@@ -29,6 +30,9 @@ public:
     const Point position;
     const double r;
 	virtual Color colorAt(Point p);
+
+	// Inherited via Object
+	virtual void setPolarRotation(double theta, double phi) override;
 };
 
 #endif /* end of include guard: SPHERE_H_115209AE */

@@ -201,6 +201,18 @@ public:
         if (b > maxValue) b = maxValue;
     }
 
+	Triple rotateAround(const Triple originPoint, const double theta, const double phi) {
+		Triple translated =  *this - originPoint;
+		double radius, newTheta, newPhi;
+		radius = translated.length();
+		newTheta = atan2(translated.y, translated.x) + theta;
+		newPhi = acos(translated.z / radius);
+
+		return Triple(radius * sin(newTheta) * cos(newPhi),
+			radius * sin(newTheta) * sin(newPhi),
+			radius * cos(theta));
+	}
+
     union {
         double data[3];
         struct {

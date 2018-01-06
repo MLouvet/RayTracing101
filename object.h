@@ -24,12 +24,15 @@
 class Material;
 
 class Object {
+protected:
+	double theta, phi; //Rotation coordinates
 public:
     Material *material;
 	Image *texture;
+	Object() : texture(NULL), material(NULL), theta(.0), phi(.0) {}
 	virtual ~Object() { }
 	virtual Color colorAt(Point p) = 0;
-
+	virtual void setPolarRotation(double theta, double phi) = 0;	//Might imply transformation on the child object
     virtual Hit intersect(const Ray &ray) = 0;
 };
 

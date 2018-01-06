@@ -21,6 +21,7 @@
 #include <math.h>
 #include <cmath>
 #include <algorithm>
+#include <complex>
 
 constexpr auto M_PI = 3.14159265358979323846;
 
@@ -96,10 +97,16 @@ Hit Sphere::intersect(const Ray &ray)
 
 Color Sphere::colorAt(Point p)
 {
+	Point rotated = p.rotateAround(this->position, theta, phi);
 	//Using U-V mapping
-	Vector N = (this->position - p).normalized();
+	Vector N = (this->position - rotated).normalized();
 	double u, v;
-	u = 0.5 + atan2(N.x, -N.y) / (2 * M_PI);
-	v = 0.5 - asin(-N.z) / M_PI;
+	u = 0.5 - atan2(N.x, N.y) / (2 * M_PI);
+	v = 0.5 + asin(N.z) / M_PI;
 	return texture->colorAt(u, v);
+}
+
+void Sphere::setPolarRotation(double theta, double phi)
+{
+	this->theta = theta; this->phi = phi;
 }

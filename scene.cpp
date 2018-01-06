@@ -121,7 +121,7 @@ Color Scene::trace(const Ray &ray)
 		case Scene::Normal:
 			return Color((N + 1) / 2);
 		case Scene::Flat:
-			return material->color;
+			return (renderTextures && obj->texture != NULL) ? obj->colorAt(hit) : material->color;
 		default:
 			cerr << "Render mode not implemented";
 			return Color(0, 0, 0);

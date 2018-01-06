@@ -124,7 +124,16 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		}
 		else
 			returnObject->texture = NULL;
-	
+
+		//Loading a potential rotation
+		if (node.FindValue("rotation") != 0) {
+			try
+			{
+				returnObject->setPolarRotation(node["rotation"][0], node["rotation"][1]);
+			}
+			catch (const std::exception&) { cerr << "Expected rotation parameters like this [theta, phi]. Rotation ignored" << endl; }
+		}
+
 		// read the material and attach to object
 		returnObject->material = parseMaterial(node["material"]);
 	}
