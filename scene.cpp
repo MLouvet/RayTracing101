@@ -47,85 +47,136 @@ Color Scene::trace(const Ray &ray)
 	//cout << whiteValue << endl;
 	switch (renderMode)
 	{
-		case Scene::Phong:
-		{
-			/****************************************************
-			* This is where you should insert the color
-			* calculation (Phong model).
-			*
-			* Given: material, hit, N, V, lights[]
-			* Sought: color
-			*
-			* Hints: (see triple.h)
-			*        Triple.dot(Vector) dot product
-			*        Vector+Vector      vector sum
-			*        Vector-Vector      vector difference
-			*        Point-Point        yields vector
-			*        Vector.normalize() normalizes vector, returns length
-			*        double*Color        scales each color component (r,g,b)
-			*        Color*Color        dito
-			*        pow(a,b)           a to the power of b
-			****************************************************/
-			// place holder
-			Color cAmbiant, cDiffuse, cSpecular, cReflected, cSurface;
-			bool shadow = false;
-			for (unsigned int i = 0; i < lights.size(); i++) {
-				shadow = false;
-				Light* l = lights[i];
-				Vector vL = (l->position - hit);
-				double lightDistance = vL.length();
-				vL.normalize();
-				Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();
-				if (renderShadows)
-					for each (Object* o in objects)
-					{
-						if (o == obj) continue;
-						Hit h = o->intersect(Ray(hit, vL, ray.depth));
-						if (!h.no_hit) {
-							if (h.t < lightDistance) {
-								shadow = true;
-								break;
-							}
+	case Scene::Gooch:
+	{
+		Color cGooch, cAmbiant, cDiffuse, cSpecular, cReflected, cSurface, retour;
+		Color cCold(0, 0, b), cWarm(y, y, 0);
+		bool shadow = false;
+		for (unsigned int i = 0; i < lights.size(); i++) {
+			shadow = false;
+			Light* l = lights[i];
+			Vector vL = (l->position - hit);
+			double lightDistance = vL.length();
+			vL.normalize();
+			Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();
+			if (renderShadows)
+				for each (Object* o in objects)
+				{
+					if (o == obj) continue;
+					Hit h = o->intersect(Ray(hit, vL, ray.depth));
+					if (!h.no_hit) {
+						if (h.t < lightDistance) {
+							shadow = true;
+							break;
 						}
 					}
+				}
 
-				//Determining adequate surface color
-				cSurface = obj->colorAt(hit);
-				//Calculation of ambient light: ka * La
-				cAmbiant += material->ka * cSurface * l->color;
-
-				//Calculation of diffuse reflection: kd * Ld * L.N
-				if (!shadow)
-					cDiffuse += material->kd * cSurface * l->color * max(vL.dot(N), 0.0);
+			//Determining adequate surface color
+			cSurface = obj->colorAt(hit);
+			//Calculation of ambient light: ka * La
+			cAmbiant += (material->ka * cSurface * l->color);
+			cGooch += (1 + N.dot(vL)) / 2;
+			retour += (1 - N.dot(vL)) / 2;
+			cCold += alpha * (l->color*material->color*material->kd);
+			cWarm += beta * (l->color*material->color*material->kd);
+			//Calculation of diffuse reflection: kd * Ld * L.N
+			if (!shadow) {
+				cDiffuse += material->kd * cSurface * l->color * max(vL.dot(N), 0.0);
 
 				//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
-				if (!shadow)
-					cSpecular += material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
-			}
 
-			//Calculation of reflection
-			Vector R = (2.0 * (N.dot(V)) * N - V).normalized();
-			if (ray.depth > 0) {
-				cReflected += material->ks * trace(Ray(hit, R, ray.depth - 1));
-
+				cSpecular += material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
 			}
-			return cAmbiant + cDiffuse + cSpecular + cReflected;
-			break;
 		}
-		case Scene::ZBuffer:	// percent of interval : maxZ-minZ
-		{
-			Color whiteC;
-			whiteC.set((minZ - min_hit.t) / (maxZ - minZ));
-			return whiteC;
+
+		//Calculation of reflection
+		Vector R = (2.0 * (N.dot(V)) * N - V).normalized();
+		if (ray.depth > 0) {
+			cReflected += material->ks * trace(Ray(hit, R, ray.depth - 1));
 		}
-		case Scene::Normal:
-			return Color((N + 1) / 2);
-		case Scene::Flat:
-			return obj->colorAt(hit);
-		default:
-			cerr << "Render mode not implemented";
-			return Color(0, 0, 0);
-			break;
+		return retour * cCold + cGooch * cWarm +cSpecular;
+	}
+	case Scene::Phong:
+	{
+		/****************************************************
+		* This is where you should insert the color
+		* calculation (Phong model).
+		*
+		* Given: material, hit, N, V, lights[]
+		* Sought: color
+		*
+		* Hints: (see triple.h)
+		*        Triple.dot(Vector) dot product
+		*        Vector+Vector      vector sum
+		*        Vector-Vector      vector difference
+		*        Point-Point        yields vector
+		*        Vector.normalize() normalizes vector, returns length
+		*        double*Color        scales each color component (r,g,b)
+		*        Color*Color        dito
+		*        pow(a,b)           a to the power of b
+		****************************************************/
+		// place holder
+		Color cAmbiant, cDiffuse, cSpecular, cReflected, cSurface;
+		bool shadow = false;
+		for (unsigned int i = 0; i < lights.size(); i++) {
+			shadow = false;
+			Light* l = lights[i];
+			Vector vL = (l->position - hit);
+			double lightDistance = vL.length();
+			vL.normalize();
+			Vector R = (2.0 * (vL.dot(N)) * N - vL).normalized();
+			if (renderShadows)
+				for each (Object* o in objects)
+				{
+					if (o == obj) continue;
+					Hit h = o->intersect(Ray(hit, vL, ray.depth));
+					if (!h.no_hit) {
+						if (h.t < lightDistance) {
+							shadow = true;
+							break;
+						}
+					}
+				}
+
+			//Determining adequate surface color
+			cSurface = obj->colorAt(hit);
+			//Calculation of ambient light: ka * La
+			cAmbiant += (material->ka * cSurface * l->color);
+			//cGooch = (Color(1, 1, 1)*(1 - N.dot(vL))) / 2 + (l->color*material->color * material->kd);
+			//Calculation of diffuse reflection: kd * Ld * L.N
+			if (!shadow) {
+				cDiffuse += material->kd * cSurface * l->color * max(vL.dot(N), 0.0);
+
+				//Calculation of specular light: ks * Ls * (v.r)^alpha with r: reflection of v of 180° around N
+
+				cSpecular += material->ks * l->color *  pow(max(0.0, V.dot(R)), material->n);
+			}
+		}
+
+		//Calculation of reflection
+		Vector R = (2.0 * (N.dot(V)) * N - V).normalized();
+		if (ray.depth > 0) {
+			cReflected += material->ks * trace(Ray(hit, R, ray.depth - 1));
+
+		}
+		return cAmbiant + cDiffuse + cSpecular + cReflected;
+		break;
+	}
+	case Scene::ZBuffer:	// percent of interval : maxZ-minZ
+	{
+		Color whiteC;
+		whiteC.set((minZ - min_hit.t) / (maxZ - minZ));
+		return whiteC;
+	}
+	case Scene::Normal:
+		return Color((N + 1) / 2);
+	case Scene::Flat:
+		return obj->colorAt(hit);
+	default:
+		cerr << "Render mode not implemented";
+		return Color(0, 0, 0);
+		break;
 	}
 
 
@@ -148,7 +199,7 @@ void Scene::render(Image &img)
 			{
 				for (int j = 0; j < aaLevel; j++)
 				{
-					Point pixel((x+ pixelBorderOffset + i * pointOffset) * camera.up.y + xZoomOffset + camera.center.x - w / 2,
+					Point pixel((x + pixelBorderOffset + i * pointOffset) * camera.up.y + xZoomOffset + camera.center.x - w / 2,
 						(-y - 1.0 + pixelBorderOffset + j * pointOffset) * camera.up.y - yZoomOffset + camera.center.y + h / 2,
 						0);
 					Ray ray(camera.eye, (pixel - camera.eye).normalized(), maxdepth);
@@ -200,4 +251,9 @@ void Scene::setSuperSampling(int superSampling)
 void Scene::setRenderMode(RenderMode mode)
 {
 	renderMode = mode;
+}
+
+void Scene::setGoochParams(double be, double B, double Alp, double Y)
+{
+	beta = be; alpha = Alp; b = B; y = Y;
 }

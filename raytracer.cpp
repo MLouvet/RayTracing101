@@ -88,6 +88,8 @@ Scene::RenderMode Raytracer::parseRenderMode(const YAML::Node & node)
 		return Scene::RenderMode::Normal;
 	if (optValue == "flat")
 		return Scene::RenderMode::Flat;
+	if (optValue == "gooch")
+		return Scene::RenderMode::Gooch;
 	else
 		throw new exception("Unknown illumination mode.");
 }
@@ -181,7 +183,15 @@ bool Raytracer::readScene(const std::string& inputFilename)
 				//No eye, trying to find a camera object
 				scene->setCamera(parseCamera(doc["Camera"]));
 			}
-
+			try {
+				double alpha, beta, b, y;
+				doc["GoochParameters"]["alpha"] >> alpha;
+				doc["GoochParameters"]["y"] >> y;
+				doc["GoochParameters"]["beta"] >> beta;
+				doc["GoochParameters"]["b"] >> b;
+				scene->setGoochParams(beta, b, alpha, y);
+			}
+			catch (std::exception) {}
 			//These following parameters are not mandatory, hence, only a try is needed.
 			try {
 				scene->setRenderShadows(doc["Shadows"]);
@@ -197,7 +207,7 @@ bool Raytracer::readScene(const std::string& inputFilename)
 			catch (const std::exception&) {}
 			try
 			{
-				scene->setRenderMode(parseRenderMode(doc["Render"]));
+				scene->setRenderMode(parseRenderMode(doc["RenderMode"]));
 			}
 			catch (const std::exception&) {}
 

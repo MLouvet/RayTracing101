@@ -31,7 +31,7 @@ class Scene
 public:
 	enum RenderMode
 	{
-		Phong = 0, ZBuffer = 1, Normal = 2, Flat = 3,None
+		Phong = 0, ZBuffer = 1, Normal = 2, Flat = 3, Gooch=4,None
 	};
 private:
 	bool renderShadows;
@@ -41,7 +41,7 @@ private:
 	std::vector<Object*> objects;
 	std::vector<Light*> lights;
 	Camera camera;
-
+	double alpha, beta, b, y;
 public:
 	Scene() : renderShadows(true), renderMode(Phong), aaLevel(1), maxdepth(1) {};
 	Color trace(const Ray &ray);
@@ -54,6 +54,7 @@ public:
 	void setMaxDepth(int depth);
 	void setSuperSampling(int superSampling);
 	void setRenderMode(RenderMode mode);
+	void setGoochParams(double be, double B, double Alp, double Y);
 	unsigned int getNumObjects() { return objects.size(); }
 	unsigned int getNumLights() { return lights.size(); }
 	unsigned int getSceneWidth() { return camera.width; }
