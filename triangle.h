@@ -9,14 +9,14 @@ public:
 	virtual Color colorAt(Point p);
 
 	~Triangle();
-	const Vector N;
-	const Vector edge0;
-	const Vector edge1;
-	const Vector edge2;
-	const Point point1;
-	const Point point2;
-	const Point point3;
-	const double d;
+	Vector N;
+	Vector edge0;
+	Vector edge1;
+	Vector edge2;
+	Point point1;
+	Point point2;
+	Point point3;
+	double d;
 	const double thickness;
 
 
@@ -29,6 +29,10 @@ public:
 	{}
 private:
 	Vector normalFrom3Points(Point p1, Point p2, Point p3);
+
+
+	// Hérité via Object
+	virtual void setPolarRotation(double theta, double phi) override;
 
 };
 

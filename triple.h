@@ -208,9 +208,9 @@ public:
 		newTheta = atan2(translated.y, translated.x) + theta;
 		newPhi = acos(translated.z / radius);
 
-		return Triple(radius * sin(newTheta) * cos(newPhi),
-			radius * sin(newTheta) * sin(newPhi),
-			radius * cos(theta));
+		return Triple(radius * cos(newTheta) * cos(newPhi),
+			radius * sin(newTheta) * cos(newPhi),
+			radius * sin(newPhi)) + originPoint;
 	}
 
     union {

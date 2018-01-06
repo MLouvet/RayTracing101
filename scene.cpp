@@ -90,7 +90,7 @@ Color Scene::trace(const Ray &ray)
 					}
 
 				//Determining adequate surface color
-				cSurface = (renderTextures && obj->texture != NULL) ? obj->colorAt(hit) : material->color;
+				cSurface = obj->colorAt(hit);
 				//Calculation of ambient light: ka * La
 				cAmbiant += material->ka * cSurface * l->color;
 
@@ -121,7 +121,7 @@ Color Scene::trace(const Ray &ray)
 		case Scene::Normal:
 			return Color((N + 1) / 2);
 		case Scene::Flat:
-			return (renderTextures && obj->texture != NULL) ? obj->colorAt(hit) : material->color;
+			return obj->colorAt(hit);
 		default:
 			cerr << "Render mode not implemented";
 			return Color(0, 0, 0);
@@ -172,11 +172,6 @@ void Scene::addLight(Light *l)
 	lights.push_back(l);
 }
 
-bool Scene::getRenderTextures()
-{
-	return renderTextures;
-}
-
 void Scene::setEye(Triple e)
 {
 	camera = Camera(e, Triple(e.x, e.y, 0), Triple(0, 1, 0), 400, 400);
@@ -190,11 +185,6 @@ void Scene::setCamera(Camera c)
 void Scene::setRenderShadows(bool b)
 {
 	renderShadows = b;
-}
-
-void Scene::setRenderTextures(bool b)
-{
-	renderTextures = b;
 }
 
 void Scene::setMaxDepth(int depth)

@@ -10,5 +10,8 @@ public:
 	const Vector N;
 	const double d;
 	virtual Color colorAt(Point p);
+
+	// Hérité via Object
+	virtual void setPolarRotation(double theta, double phi) override;
 };
 

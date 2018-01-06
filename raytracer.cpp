@@ -49,7 +49,15 @@ Triple parseTriple(const YAML::Node& node)
 Material* Raytracer::parseMaterial(const YAML::Node& node)
 {
 	Material *m = new Material();
-	node["color"] >> m->color;
+	// Loading a potential texture
+	if (node.FindValue("texture") != 0) {
+		string s = node["texture"];
+		m->texture = new Image(s.c_str());
+	}
+	else {
+		m->texture = NULL;
+		node["color"] >> m->color;
+	}
 	node["ka"] >> m->ka;
 	node["kd"] >> m->kd;
 	node["ks"] >> m->ks;
@@ -117,14 +125,6 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 	}
 
 	if (returnObject) {
-		// Loading a potential texture
-		if (node.FindValue("texturePath") != 0) {
-			string s = node["texturePath"];
-			returnObject->texture = new Image(s.c_str());
-		}
-		else
-			returnObject->texture = NULL;
-
 		//Loading a potential rotation
 		if (node.FindValue("rotation") != 0) {
 			try
@@ -185,10 +185,6 @@ bool Raytracer::readScene(const std::string& inputFilename)
 			//These following parameters are not mandatory, hence, only a try is needed.
 			try {
 				scene->setRenderShadows(doc["Shadows"]);
-			}
-			catch (const std::exception&) {}
-			try {
-				scene->setRenderTextures(doc["Textures"]);
 			}
 			catch (const std::exception&) {}
 			try {
