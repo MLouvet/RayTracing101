@@ -33,6 +33,7 @@ public:
 	virtual Color colorAt(Point p) = 0;
 	virtual void setRotation(Vector axis, double angle) = 0;	//Might imply transformation on the child object
     virtual Hit intersect(const Ray &ray) = 0;
+	virtual void setMaterial(Material* m) { material = m; }
 };
 
 #endif /* end of include guard: OBJECT_H_AXKLE0OF */

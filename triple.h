@@ -206,6 +206,9 @@ public:
 	}
 
 	Triple rotateAround(const Triple axis, double angle) {
+		if (angle == 0)
+			return *this;
+
 		//Application of Rodrigues' rotation formula
 		double c = cos(angle);
 		double s = sin(angle);

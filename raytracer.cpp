@@ -123,13 +123,18 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		node["point1"] >> p1;
 		node["point2"] >> p2;
 		node["point3"] >> p3;
-		node["e"] >> thick;
-		returnObject = new Triangle(p1, p2, p3, thick);
+		returnObject = new Triangle(p1, p2, p3);
 	}
 	else if (objectType == "mesh") {
 		string s;
 		node["name"] >> s;
-		returnObject = new Mesh(s);
+		Point pos;
+		node["position"] >> pos;
+		float scale;
+		node["scale"] >> scale;
+		Mesh* m = new Mesh(s, pos, scale);
+		m->fiilScene(scene);
+		returnObject = m;
 	}
 
 	if (returnObject) {
@@ -145,7 +150,7 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		// read the material and attach to object - might be no material if mesh
 		try
 		{
-			returnObject->material = parseMaterial(node["material"]);
+			returnObject->setMaterial(parseMaterial(node["material"]));
 		}
 		catch (const std::exception&) {}
 	}

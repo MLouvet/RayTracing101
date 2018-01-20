@@ -10,23 +10,23 @@ public:
 
 	~Triangle();
 	Vector N;
-	Vector edge0;
 	Vector edge1;
 	Vector edge2;
+	Vector edge3;
 	Point point1;
 	Point point2;
 	Point point3;
 	double d;
-	const double thickness;
 
 
-	Triangle(Point point1, Point point2, Point point3, double thickness) : point1(point1), point2(point2), point3(point3), thickness(thickness),
+	Triangle(Point point1, Point point2, Point point3) : point1(point1), point2(point2), point3(point3),
 		N(normalFrom3Points(point1, point2, point3)),
-		d(N.x * point1.x + N.y * point1.y + N.z * point1.z),
-		edge0(point2 - point1),
-		edge1(point3 - point2),
-		edge2(point1 - point3)
+		d(-(N.x * point1.x + N.y * point1.y + N.z * point1.z)),
+		edge1(point2 - point1),
+		edge2(point3 - point2),
+		edge3(point1 - point3)
 	{}
+
 private:
 	Vector normalFrom3Points(Point p1, Point p2, Point p3);
 

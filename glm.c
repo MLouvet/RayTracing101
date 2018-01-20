@@ -1357,6 +1357,28 @@ glmReadOBJ(char* filename)
 	   of vertices, normals, texcoords & triangles */
 	glmFirstPass(model, file);
 
+	if (model->nummaterials == 0) {
+		model->materials = (GLMmaterial*)malloc(sizeof(GLMmaterial));
+		model->nummaterials = 1;
+
+		/* set the default material */
+		model->materials[0].name = NULL;
+		model->materials[0].shininess = 65.0;
+		model->materials[0].diffuse[0] = 0.8;
+		model->materials[0].diffuse[1] = 0.8;
+		model->materials[0].diffuse[2] = 0.8;
+		model->materials[0].diffuse[3] = 1.0;
+		model->materials[0].ambient[0] = 0.2;
+		model->materials[0].ambient[1] = 0.2;
+		model->materials[0].ambient[2] = 0.2;
+		model->materials[0].ambient[3] = 1.0;
+		model->materials[0].specular[0] = 0.0;
+		model->materials[0].specular[1] = 0.0;
+		model->materials[0].specular[2] = 0.0;
+		model->materials[0].specular[3] = 1.0;
+		model->materials[0].name = strdup("default");
+	}
+
 	/* allocate memory */
 	model->vertices = (float*)malloc(sizeof(float) *
 		3 * (model->numvertices + 1));
@@ -1724,7 +1746,7 @@ if (model->numtexcoords) {
 	}
 
 	free(copies);
-}
+		}
 #endif
 
 #if 0
