@@ -26,6 +26,10 @@ public:
 	{
 	}
 
+	explicit Triple(float* array) : x(array[0]), y(array[1]), z(array[3])
+	{
+	}
+
 	Triple operator+(const Triple &t) const
 	{
 		return Triple(x + t.x, y + t.y, z + t.z);
@@ -134,14 +138,14 @@ public:
 
 	double dot(const Triple &t) const
 	{
-		return x*t.x + y*t.y + z*t.z;
+		return x * t.x + y * t.y + z * t.z;
 	}
 
 	Triple cross(const Triple &t) const
 	{
-		return Triple(y*t.z - z*t.y,
-			z*t.x - x*t.z,
-			x*t.y - y*t.x);
+		return Triple(y*t.z - z * t.y,
+			z*t.x - x * t.z,
+			x*t.y - y * t.x);
 	}
 
 	double length() const
@@ -151,7 +155,7 @@ public:
 
 	double length_2() const
 	{
-		return x*x + y*y + z*z;
+		return x * x + y * y + z * z;
 	}
 
 	Triple normalized() const

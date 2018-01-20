@@ -21,6 +21,7 @@
 #include "light.h"
 #include "image.h"
 #include "yaml/yaml.h"
+#include "mesh.h"
 #include <ctype.h>
 #include <fstream>
 #include <assert.h>
@@ -125,6 +126,11 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		node["e"] >> thick;
 		returnObject = new Triangle(p1, p2, p3, thick);
 	}
+	else if (objectType == "mesh") {
+		string s;
+		node["name"] >> s;
+		returnObject = new Mesh(s);
+	}
 
 	if (returnObject) {
 		//Loading a potential rotation
@@ -136,8 +142,12 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 			catch (const std::exception&) { cerr << "Expected rotation parameter as a 3D vector [x,y,z], angle as a double. Rotation ignored" << endl; }
 		}
 
-		// read the material and attach to object
-		returnObject->material = parseMaterial(node["material"]);
+		// read the material and attach to object - might be no material if mesh
+		try
+		{
+			returnObject->material = parseMaterial(node["material"]);
+		}
+		catch (const std::exception&) {}
 	}
 
 	return returnObject;

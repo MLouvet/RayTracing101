@@ -34,7 +34,7 @@ private:
 	Scene::RenderMode parseRenderMode(const YAML::Node& node);
 
 public:
-	Raytracer() {};
+	Raytracer() { }
 
 	bool readScene(const std::string& inputFilename);
 	void renderToFile(const std::string& outputFilename);
