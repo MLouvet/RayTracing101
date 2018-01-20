@@ -26,8 +26,8 @@ Color Plane::colorAt(Point p)
 	return material->color;
 }
 
-void Plane::setPolarRotation(double theta, double phi)
+void Plane::setRotation(Vector axis, double angle)
 {
-	this->theta = theta; this->phi = phi;
+	this->rotationAxis = axis; this->angle = angle;
 	cerr << "Plane ignores rotation right now" << endl;
 }

@@ -32,7 +32,7 @@ private:
 
 
 	// Hérité via Object
-	virtual void setPolarRotation(double theta, double phi) override;
+	virtual void setRotation(Vector axis, double angle) override;
 
 };
 

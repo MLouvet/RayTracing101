@@ -101,16 +101,22 @@ Color Sphere::colorAt(Point p)
 	if (this->material->texture == NULL)
 		return material->color;
 
-	Point rotated = p.rotateAround(this->position, theta, phi);
+	Point result = p - position;
+	if (angle != 0)
+	{
+		Vector verticalAxis(0, 0, 1);
+		result = (p - position).rotateAround(rotationAxis, angle);
+	}
+
 	//Using U-V mapping
-	Vector N = (this->position - rotated).normalized();
+	Vector N = result.normalized();
 	double u, v;
-	u = 0.5 - atan2(N.x, N.y) / (2 * M_PI);
-	v = 0.5 + asin(N.z) / M_PI;
+	u = 0.5 + atan2(N.y, N.x) / (2 * M_PI); //Dividing so that we're between 0 and 1
+	v = 0.5 - asin(N.z) / M_PI;				//Same here
 	return material->texture->colorAt(u, v);
 }
 
-void Sphere::setPolarRotation(double theta, double phi)
+void Sphere::setRotation(Vector axis, double angle)
 {
-	this->theta = theta; this->phi = phi;
+	this->rotationAxis = axis; this->angle = angle;
 }

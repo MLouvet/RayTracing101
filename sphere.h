@@ -32,7 +32,7 @@ public:
 	virtual Color colorAt(Point p);
 
 	// Inherited via Object
-	virtual void setPolarRotation(double theta, double phi) override;
+	virtual void setRotation(Vector axis, double angle) override;
 };
 
 #endif /* end of include guard: SPHERE_H_115209AE */
