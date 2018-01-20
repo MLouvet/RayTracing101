@@ -9,6 +9,8 @@ using namespace std;
 class Mesh :
 	public Object
 {
+private:
+	bool materialFound;
 public:
 	vector<Triangle*> objects;
 	virtual Hit intersect(const Ray &ray);
@@ -17,7 +19,7 @@ public:
 	~Mesh();
 	void fiilScene(Scene* s);
 
-	// Hérité via Object
+	// Hï¿½ritï¿½ via Object
 	virtual void setRotation(Vector axis, double angle) override;
 	void Mesh::setMaterial(Material*m);
 	};
