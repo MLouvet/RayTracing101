@@ -765,11 +765,6 @@ glmSecondPass(GLMmodel* model, FILE* file)
 		numtexcoords * 3 * sizeof(float) * (numtexcoords ? 1 : 0) +
 		numtriangles * sizeof(GLMtriangle));
 #endif
-	printf("GLM\n");
-	for (int i = 0; i < model->numvertices; i++)
-	{
-		printf("Vertice %d : %f\n", i, model->numvertices);
-	}
 }
 
 

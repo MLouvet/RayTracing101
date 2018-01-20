@@ -19,43 +19,11 @@ Mesh::Mesh(string path, Point offset, float scale)
 {
 	GLMmodel* model = glmReadOBJ((char *)(path + ".obj").c_str());
 
-	//GLMgroup* group = model->groups;
-	//while (group) {
-	//	for (int i = 0; i < group->numtriangles; i++)
-	//	{
-	//		GLMtriangle t = model->triangles[group->triangles[i]];
-	//		Point p1(model->vertices[t.vindices[0] * 3], model->vertices[t.vindices[0] * 3 + 1], model->vertices[t.vindices[0] * 3 + 2]);
-	//		Point p2(model->vertices[t.vindices[1] * 3], model->vertices[t.vindices[1] * 3 + 1], model->vertices[t.vindices[1] * 3 + 2]);
-	//		Point p3(model->vertices[t.vindices[2] * 3], model->vertices[t.vindices[2] * 3 + 1], model->vertices[t.vindices[2] * 3 + 2]);
-
-
-	//		p1 += offset;
-	//		p2 += offset;
-	//		p3 += offset;
-	//		cout << p1 << endl;
-	//		cout << p2 << endl;
-	//		cout << p3 << endl;
-
-	//		//p1.rotateAround(rotationAxis, angle);
-	//		//p2.rotateAround(rotationAxis, angle);
-	//		//p3.rotateAround(rotationAxis, angle);
-
-	//		Triangle *triangle = new Triangle(p1, p2, p3);
-
-	//		GLMmaterial m = model->materials[glmFindMaterial(model, group->name)];
-	//		Material *material = new Material();
-	//		material->ka = *m.ambient;
-	//		material->kd = *m.diffuse;
-	//		material->ks = *m.specular;
-
-	//		triangle->material = material;
-	//		objects.push_back(triangle);
-	//	}
-	//	group = group->next;
-	//}
-		for (int i = 0; i < model->numtriangles; i++)
+	GLMgroup* group = model->groups;
+	while (group) {
+		for (int i = 0; i < group->numtriangles; i++)
 		{
-			GLMtriangle t = model->triangles[i];
+			GLMtriangle t = model->triangles[group->triangles[i]];
 			Point p1(model->vertices[t.vindices[0] * 3], model->vertices[t.vindices[0] * 3 + 1], model->vertices[t.vindices[0] * 3 + 2]);
 			Point p2(model->vertices[t.vindices[1] * 3], model->vertices[t.vindices[1] * 3 + 1], model->vertices[t.vindices[1] * 3 + 2]);
 			Point p3(model->vertices[t.vindices[2] * 3], model->vertices[t.vindices[2] * 3 + 1], model->vertices[t.vindices[2] * 3 + 2]);
@@ -64,25 +32,25 @@ Mesh::Mesh(string path, Point offset, float scale)
 			p1 += offset;
 			p2 += offset;
 			p3 += offset;
-			cout << p1 << endl;
-			cout << p2 << endl;
-			cout << p3 << endl;
 
-			//p1.rotateAround(rotationAxis, angle);
-			//p2.rotateAround(rotationAxis, angle);
-			//p3.rotateAround(rotationAxis, angle);
+			p1.rotateAround(rotationAxis, angle);
+			p2.rotateAround(rotationAxis, angle);
+			p3.rotateAround(rotationAxis, angle);
 
 			Triangle *triangle = new Triangle(p1, p2, p3);
 
-			//GLMmaterial m = model->materials[glmFindMaterial(model, group->name)];
-			//Material *material = new Material();
-			//material->ka = *m.ambient;
-			//material->kd = *m.diffuse;
-			//material->ks = *m.specular;
+			GLMmaterial m = model->materials[glmFindMaterial(model, group->name)];
+			Material *material = new Material();
+			material->ka = *m.ambient;
+			material->kd = *m.diffuse;
+			material->ks = *m.specular;
 
-			//triangle->material = material;
+			triangle->material = material;
 			objects.push_back(triangle);
 		}
+		group = group->next;
+	}
+		
 	//Cleaning up
 	glmDelete(model);
 }

@@ -190,6 +190,7 @@ void Scene::render(Image &img)
 	double pixelBorderOffset = 0.5 * pointOffset;
 	double xZoomOffset = (1.0 - camera.up.y) *0.5 * w;
 	double yZoomOffset = (1.0 - camera.up.y) *0.5 * h;
+	int* pixelCount = new int(w * h);
 #pragma omp parallel for
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
@@ -209,8 +210,12 @@ void Scene::render(Image &img)
 			col /= pow(aaLevel, 2);
 			col.clamp();
 			img(x, y) = col;
+			(*pixelCount)--;
+			if (*pixelCount % 1000 == 0)
+				cout << "Pixels remaining : " << *pixelCount << endl;
 		}
 	}
+	free(pixelCount);
 }
 
 void Scene::addObject(Object *o)
