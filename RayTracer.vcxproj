@@ -95,6 +95,8 @@
     <ClCompile Include="material.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="plane.cpp" />
+    <ClCompile Include="prisme.cpp" />
+    <ClCompile Include="quad.cpp" />
     <ClCompile Include="raytracer.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sphere.cpp" />
@@ -132,6 +134,8 @@
     <ClInclude Include="mesh.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="plane.h" />
+    <ClInclude Include="prisme.h" />
+    <ClInclude Include="quad.h" />
     <ClInclude Include="raytracer.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sphere.h" />

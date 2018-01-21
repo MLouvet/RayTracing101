@@ -18,6 +18,8 @@
 #include "sphere.h"
 #include "material.h"
 #include "triangle.h"
+#include "quad.h"
+#include "prisme.h"
 #include "light.h"
 #include "image.h"
 #include "yaml/yaml.h"
@@ -124,6 +126,41 @@ Object* Raytracer::parseObject(const YAML::Node& node)
 		node["point2"] >> p2;
 		node["point3"] >> p3;
 		returnObject = new Triangle(p1, p2, p3);
+	}
+	else if (objectType == "quad") {
+		Point p1, p2, p3, p4;
+		node["point1"] >> p1;
+		node["point2"] >> p2;
+		node["point3"] >> p3;
+		node["point4"] >> p4;
+		returnObject = new Quad(p1, p2, p3, p4);
+	}
+	else if (objectType == "prisme") {
+		Quad q1, q2, q3;
+		Point p1, p2, p3, p4;
+		node["t1point1"] >> p1;
+		node["t1point2"] >> p2;
+		node["t1point3"] >> p3;
+		Triangle t1(p1, p2, p3);
+		node["t2point1"] >> p1;
+		node["t2point2"] >> p2;
+		node["t2point3"] >> p3;
+		Triangle t2(p1, p2, p3);
+		node["q1point1"] >> p1;
+		node["q1point2"] >> p2;
+		node["q1point3"] >> p3;
+		node["q1point4"] >> p4;
+		Quad q1(p1, p2, p3, p4);
+		node["q2point1"] >> p1;
+		node["q2point2"] >> p2;
+		node["q2point3"] >> p3;
+		node["q2point4"] >> p4;
+		Quad q2(p1, p2, p3, p4);
+		node["q3point1"] >> p1;
+		node["q3point2"] >> p2;
+		node["q3point3"] >> p3;
+		node["q3point4"] >> p4;
+		returnObject = new Prisme(t1, t2, q1, q2, q3);
 	}
 	else if (objectType == "mesh") {
 		string s;
