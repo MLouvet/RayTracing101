@@ -1,0 +1,35 @@
+# Blender3D MTL File: Lagiacrus.blend
+# Material Count: 3
+newmtl Lagiacrus1_em015_BM_01.png
+Ns 96.078431
+Ka 0.4000 0.4000 0.4000
+Kd 0.0000 0.2000 1.0000
+Ks 0.5000 0.5000 0.5000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd em015_BM_01.png
+
+
+newmtl Lagiacrus3_em015_BM_03.png
+Ns 96.078431
+Ka 0.4000 0.4000 0.4000
+Kd 0.0000 0.5000 1.0000
+Ks 0.7000 0.7000 0.7000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd em015_BM_03.png
+
+
+newmtl Lagiacrus2_em015_BM_02.png
+Ns 96.078431
+Ka 0.4000 0.4000 0.4000
+Kd 0.0000 0.7000 0.8000
+Ks 0.7000 0.7000 0.7000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd em015_BM_02.png
+
+
