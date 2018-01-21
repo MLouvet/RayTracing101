@@ -1,0 +1,217 @@
+﻿  glm.c
+glm.c(191): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(538): note: voir la déclaration de 'strdup'
+glm.c(239): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(538): note: voir la déclaration de 'strdup'
+glm.c(267): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+glm.c(268): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+glm.c(308): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(309): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(310): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(312): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(313): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(314): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(271): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(207): note: voir la déclaration de 'fopen'
+glm.c(281): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(290): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(321): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(538): note: voir la déclaration de 'strdup'
+glm.c(325): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(333): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(335): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(538): note: voir la déclaration de 'strdup'
+glm.c(338): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(346): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(352): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(358): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(394): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+glm.c(395): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+glm.c(399): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(207): note: voir la déclaration de 'fopen'
+glm.c(453): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(484): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(485): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(538): note: voir la déclaration de 'strdup'
+glm.c(504): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(508): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(509): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(510): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(513): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(518): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(520): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(521): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(524): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(529): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(531): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(532): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(535): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(542): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(543): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(546): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(607): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(616): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(623): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(630): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(639): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(655): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(659): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(662): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(665): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(670): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(681): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(686): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(690): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(696): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(710): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(714): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(717): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(722): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(735): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(2261): note: voir la déclaration de 'sscanf'
+glm.c(737): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(739): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(743): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(1195): note: voir la déclaration de 'fscanf'
+glm.c(818): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(819): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(820): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(823): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1023): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1182): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1188): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1189): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1239): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1240): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1248): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(1250): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1253): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(1255): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1258): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1259): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+glm.c(1362): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(1363): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(1364): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(1366): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(1367): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(1368): warning C4305: '=' : troncation de 'double' à 'float'
+glm.c(1322): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(207): note: voir la déclaration de 'fopen'
+glm.c(1331): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(538): note: voir la déclaration de 'strdup'
+glm.c(1374): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\string.h(538): note: voir la déclaration de 'strdup'
+glm.c(1465): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(207): note: voir la déclaration de 'fopen'
+  image.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+  light.cpp
+  lodepng.cpp
+lodepng.cpp(4064): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(207): note: voir la déclaration de 'fopen'
+lodepng.cpp(4086): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.16299.0\ucrt\stdio.h(207): note: voir la déclaration de 'fopen'
+  main.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+  material.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+  mesh.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+mesh.cpp(53): warning C4018: '<' : incompatibilité signed/unsigned
+mesh.cpp(99): warning C4018: '<' : incompatibilité signed/unsigned
+mesh.cpp(108): warning C4018: '<' : incompatibilité signed/unsigned
+  plane.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+  raytracer.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+raytracer.cpp(121): warning C4101: 'thick' : variable locale non référencée
+  scene.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+  sphere.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+sphere.cpp(116): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
+  triangle.cpp
+c:\users\supermat\source\repos\raytracing101\image.h(122): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+c:\users\supermat\source\repos\raytracing101\image.h(123): warning C4244: '=' : conversion de 'double' en 'float', perte possible de données
+  triple.cpp
+  aliascontent.cpp
+  content.cpp
+  conversion.cpp
+  emitter.cpp
+  emitterstate.cpp
+  emitterutils.cpp
+  exp.cpp
+  iterator.cpp
+  Génération de code en cours...
+  Compilation en cours...
+  map.cpp
+  node.cpp
+  null.cpp
+  ostream.cpp
+  parser.cpp
+  parserstate.cpp
+  regex.cpp
+  scalar.cpp
+  scanner.cpp
+  scanscalar.cpp
+  scantoken.cpp
+  sequence.cpp
+  simplekey.cpp
+  stream.cpp
+yaml\stream.cpp(410): warning C4244: '=' : conversion de 'std::streamsize' en '::size_t', perte possible de données
+  Génération de code en cours...
+  RayTracer.vcxproj -> C:\Users\SuperMat\source\repos\RayTracing101\Release\RayTracer.exe
