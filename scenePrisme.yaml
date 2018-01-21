@@ -1,0 +1,23 @@
+---
+#  scene02
+
+Eye: [200,200,1000]  
+
+Lights:
+- position: [-1000,600,500]
+  color: [1.0,1.0,1.0]
+
+Objects:
+- type: prisme
+  t1point1: [180, 180, -200]
+  t1point2: [40, 200, -250]
+  t1point3: [200, 150, -150]
+  t2point1: [180, 200, -200]
+  t2point2: [40, 220, -250]
+  t2point3: [200, 170, -150]
+  material:
+    color: [1.0,1.0,1.0]
+    ka: 0.1
+    kd: 0.6
+    ks: 0.9
+    n: 1
