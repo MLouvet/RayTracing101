@@ -1,26 +1,24 @@
 #include "quad.h"
-
+#include "triangle.h"
 
 
 Hit Quad::intersect(const Ray & ray)
 {
-	Point intersect;
-
-	if (N.dot(ray.D) == 0)
-		return Hit::NO_HIT();
-	else {
+	Triangle t1(point1, point2,point3), t2(point1, point2, point4)
+		, t3(point1, point4, point3), t4(point4, point2, point3);
+	Hit h1 = t1.intersect(ray), h2=t2.intersect(ray), h3=t3.intersect(ray), h4=t4.intersect(ray);
+	if (!h1.no_hit || !h2.no_hit || !h3.no_hit || !h4.no_hit)
+	{
 		double t = (-N.dot(ray.O) - d) / (N.dot(ray.D));
-		intersect = ray.O + ray.D*t;
-
-		Vector C0 = intersect - point1;
-		Vector C1 = intersect - point2;
-		Vector C2 = intersect - point3;
-		Vector C3 = intersect - point4;
-		if (N.dot(edge1.cross(C0)) > 0 &&
-			N.dot(edge2.cross(C1)) > 0 &&
-			N.dot(edge3.cross(C2)) > 0 &&
-			N.dot(edge4.cross(C3)) >0)
-			return Hit(t, N.normalized());
+		if (!h1.no_hit && h1.t > t)
+			t = h1.t;
+		if (!h2.no_hit && h2.t > t)
+			t = h2.t;
+		if (!h3.no_hit && h3.t > t)
+			t = h3.t;
+		if (!h4.no_hit && h4.t > t)
+			t = h4.t;
+		return Hit(t, N.normalized());
 	}
 	return Hit::NO_HIT();
 }
@@ -37,10 +35,13 @@ Quad::Quad()
 
 Vector Quad::normalFrom4pts(Point point1, Point point2, Point point3, Point point4)
 {
-	Vector v1 = point2 - point1;
-	Vector v2 = point2 - point1;
+	Triangle t1(point1, point2, point3), t2(point1, point2, point4)
+		, t3(point1, point4, point3), t4(point4, point2, point3);
+	return t1.N+t2.N+t3.N+t4.N;
+}
 
-	return v1.cross(v2);
+void Quad::setRotation(Vector axis, double angle)
+{
 }
 
 Quad::~Quad()

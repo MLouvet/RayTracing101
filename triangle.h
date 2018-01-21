@@ -18,7 +18,7 @@ public:
 	Point point3;
 	double d;
 
-	Triangle();
+
 	Triangle(Point point1, Point point2, Point point3) : point1(point1), point2(point2), point3(point3),
 		N(normalFrom3Points(point1, point2, point3)),
 		d(-(N.x * point1.x + N.y * point1.y + N.z * point1.z)),
