@@ -190,75 +190,78 @@ void Scene::render(Image &img)
 	double pixelBorderOffset = 0.5 * pointOffset;
 	double xZoomOffset = (1.0 - camera.up.y) *0.5 * w;
 	double yZoomOffset = (1.0 - camera.up.y) *0.5 * h;
-	int* pixelCount = new int(w * h);
+	int pixelCount = w * h;
 #pragma omp parallel for
-	for (int y = 0; y < h; y++) {
-		for (int x = 0; x < w; x++) {
-			Color col;
-			double aaOffset = pixelBorderOffset;
-			for (int i = 0; i < aaLevel; i++)
+	for (int pixel = 0; pixel < pixelCount; pixel++) {
+		int localCount = 0;
+		int x = pixel % w;
+		int y = (pixel - x) / w;
+
+
+		Color col;
+		double aaOffset = pixelBorderOffset;
+		for (int i = 0; i < aaLevel; i++)
+		{
+			for (int j = 0; j < aaLevel; j++)
 			{
-				for (int j = 0; j < aaLevel; j++)
-				{
-					Point pixel((x + pixelBorderOffset + i * pointOffset) * camera.up.y + xZoomOffset + camera.center.x - w / 2,
-						(-y - 1.0 + pixelBorderOffset + j * pointOffset) * camera.up.y - yZoomOffset + camera.center.y + h / 2,
-						0);
-					Ray ray(camera.eye, (pixel - camera.eye).normalized(), maxdepth);
-					col = col + trace(ray);
-				}
+				Point pixel((x + pixelBorderOffset + i * pointOffset) * camera.up.y + xZoomOffset + camera.center.x - w / 2,
+					(-y - 1.0 + pixelBorderOffset + j * pointOffset) * camera.up.y - yZoomOffset + camera.center.y + h / 2,
+					0);
+				Ray ray(camera.eye, (pixel - camera.eye).normalized(), maxdepth);
+				col = col + trace(ray);
 			}
-			col /= pow(aaLevel, 2);
-			col.clamp();
-			img(x, y) = col;
-			(*pixelCount)--;
-			if (*pixelCount % 1000 == 0)
-				cout << "Pixels remaining : " << *pixelCount << endl;
 		}
+		col /= pow(aaLevel, 2);
+		col.clamp();
+		img(x, y) = col;
+
+		//Showing work progress on long rendering
+		pixelCount--;
+		if (pixelCount % 1000 == 0)
+			cout << "Pixels remaining : " << pixelCount << endl;
 	}
-	free(pixelCount);
 }
+	void Scene::addObject(Object *o)
+	{
+		objects.push_back(o);
+	}
 
-void Scene::addObject(Object *o)
-{
-	objects.push_back(o);
-}
+	void Scene::addLight(Light *l)
+	{
+		lights.push_back(l);
+	}
 
-void Scene::addLight(Light *l)
-{
-	lights.push_back(l);
-}
+	void Scene::setEye(Triple e)
+	{
+		camera = Camera(e, Triple(e.x, e.y, 0), Triple(0, 1, 0), 400, 400);
+	}
 
-void Scene::setEye(Triple e)
-{
-	camera = Camera(e, Triple(e.x, e.y, 0), Triple(0, 1, 0), 400, 400);
-}
+	void Scene::setCamera(Camera c)
+	{
+		camera = c;
+	}
 
-void Scene::setCamera(Camera c)
-{
-	camera = c;
-}
+	void Scene::setRenderShadows(bool b)
+	{
+		renderShadows = b;
+	}
 
-void Scene::setRenderShadows(bool b)
-{
-	renderShadows = b;
-}
+	void Scene::setMaxDepth(int depth)
+	{
+		maxdepth = depth;
+	}
 
-void Scene::setMaxDepth(int depth)
-{
-	maxdepth = depth;
-}
+	void Scene::setSuperSampling(int superSampling)
+	{
+		aaLevel = superSampling;
+	}
 
-void Scene::setSuperSampling(int superSampling)
-{
-	aaLevel = superSampling;
-}
+	void Scene::setRenderMode(RenderMode mode)
+	{
+		renderMode = mode;
+	}
 
-void Scene::setRenderMode(RenderMode mode)
-{
-	renderMode = mode;
-}
-
-void Scene::setGoochParams(double be, double B, double Alp, double Y)
-{
-	beta = be; alpha = Alp; b = B; y = Y;
-}
+	void Scene::setGoochParams(double be, double B, double Alp, double Y)
+	{
+		beta = be; alpha = Alp; b = B; y = Y;
+	}

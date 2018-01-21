@@ -1,5 +1,5 @@
 #pragma once
-#include "triangle.h"
+#include "Triangle.h"
 #include "scene.h"
 #include <vector>
 #include <string>
@@ -13,6 +13,9 @@ private:
 	bool materialFound;
 public:
 	vector<Triangle*> objects;
+	vector<Image*> textures;
+	Image* getTexture(int index);
+	vector<int> textureIndexes;
 	virtual Hit intersect(const Ray &ray);
 	virtual Color colorAt(Point p);
 	Mesh(string path, Point offset, float scale);
@@ -22,5 +25,5 @@ public:
 	// H�rit� via Object
 	virtual void setRotation(Vector axis, double angle) override;
 	void Mesh::setMaterial(Material*m);
-	};
+};
 

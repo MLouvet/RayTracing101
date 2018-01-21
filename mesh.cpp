@@ -3,31 +3,28 @@
 #include "triple.h"
 #include "triangle.h"
 #include <algorithm>
+#include <fstream>
 
-#include <functional> 
-#include <cctype>
-#include <locale>
+bool fexists(const char *filename)
+{
+	ifstream file(filename, ios::in);
 
-//Credits for trimming functions : https://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring?page=1&tab=votes#tab-top
-//from Evan Teran
-
-// trim from start
-static inline std::string &ltrim(std::string &s) {
-	s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-		std::not1(std::ptr_fun<int, int>(std::isspace))));
-	return s;
+	if (file)
+	{
+		file.close();
+		return true;
+	}
+	return false;
 }
 
-// trim from end
-static inline std::string &rtrim(std::string &s) {
-	s.erase(std::find_if(s.rbegin(), s.rend(),
-		std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-	return s;
-}
-
-// trim from both ends
-static inline std::string &trim(std::string &s) {
-	return ltrim(rtrim(s));
+Image * Mesh::getTexture(int index)
+{
+	for (int i = 0; i < textureIndexes.size(); i++)
+	{
+		if (textureIndexes[i] == index)
+			return textures[i];
+	}
+	return nullptr;
 }
 
 Hit Mesh::intersect(const Ray &ray)
@@ -42,10 +39,22 @@ Color Mesh::colorAt(Point p)
 
 Mesh::Mesh(string path, Point offset, float scale)
 {
-	//Trimming the path
-
 	materialFound = false;
 	GLMmodel *model = glmReadOBJ((char *)(path + ".obj").c_str());
+
+
+	//Reading textures
+	for (int i = 0; i < model->nummaterials; i++)
+	{
+		GLMmaterial m = model->materials[i];
+		if (fexists(m.name)) //Corresponds to texture
+		{
+			textureIndexes.push_back(i);
+			textures.push_back(new Image(m.name));
+		}
+	}
+
+
 
 	GLMgroup *group = model->groups;
 	while (group)
@@ -57,6 +66,10 @@ Mesh::Mesh(string path, Point offset, float scale)
 			Point p2(model->vertices[t.vindices[1] * 3], model->vertices[t.vindices[1] * 3 + 1], model->vertices[t.vindices[1] * 3 + 2]);
 			Point p3(model->vertices[t.vindices[2] * 3], model->vertices[t.vindices[2] * 3 + 1], model->vertices[t.vindices[2] * 3 + 2]);
 
+			p1 *= scale;
+			p2 *= scale;
+			p3 *= scale;
+
 			p1 += offset;
 			p2 += offset;
 			p3 += offset;
@@ -67,20 +80,34 @@ Mesh::Mesh(string path, Point offset, float scale)
 
 			Triangle *triangle = new Triangle(p1, p2, p3);
 
-			//Trimming groupnames, as it seems to hhave unwanted spaces
-			string groupName = trim( string(group->name));
+			if (group->material >= 0 && group->material < model->nummaterials) {
+				GLMmaterial m = model->materials[group->material];
 
-			int numMaterial = glmFindMaterial(model, (char *)groupName.c_str());
-			if (numMaterial)
+
+
+				Material *material = new Material();
+				material->ka = m.ambient[0];
+				material->kd = m.diffuse[0];
+				material->ks = m.specular[0];
+				material->color = Color(m.diffuse[0], m.diffuse[1], m.diffuse[2]);
+
+				triangle->material = material;
+
+
 				materialFound = true;
-			GLMmaterial m = model->materials[numMaterial];
-			Material *material = new Material();
-			material->ka = m.ambient[0];
-			material->kd = m.diffuse[0];
-			material->ks = m.specular[0];
-			material->color = Color(m.diffuse[0], m.diffuse[1], m.diffuse[2]);
 
-			triangle->material = material;
+				//DOESNT WORK
+				/*Image* texture = this->getTexture(group->material);
+				if (texture) {
+					triangle->setTextureWithCoordinates(texture, model->texcoords[t.tindices[0] * 3], model->texcoords[t.tindices[0] * 3 + 1]);
+				}
+				else {
+					triangle->material->texture = NULL;
+				}*/
+			}
+			else
+				cout << "Erreur de .png" << endl;
+
 			objects.push_back(triangle);
 		}
 		group = group->next;
@@ -113,6 +140,10 @@ void Mesh::setMaterial(Material *m)
 
 void Mesh::setRotation(Vector axis, double angle)
 {
+	for (int i = 0; i < objects.size(); i++)
+	{
+		objects[i]->setRotation(axis, angle);
+	}
 	rotationAxis = axis;
 	this->angle = angle;
 }
